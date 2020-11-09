@@ -1,0 +1,201 @@
+{% extends 'base.html'%} {% block title %}
+<title>Lukuo Home</title>
+{% endblock %} {% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename = './landing.css')}}"> {% endblock %} {% block content%}
+<main>
+    <input type="radio" checked name="radio" id="mov">
+    <input type="radio" name="radio" id="mus">
+    <input type="radio" name="radio" id="tv">
+    <div class="select">
+        <div class="select-wrap">
+            <label for="mov" class="mov">
+                movie
+            </label>
+            <label for="mus" class="mus">
+                music
+            </label>
+            <label for="tv" class="tv">
+                tv-series
+            </label>
+        </div>
+        <div class="bar">
+        </div>
+    </div>
+    <div class="movie-div">
+        <div class="search">
+            <form action="" method="POST">
+                {{form.hidden_tag()}} {%if form.search.errors%}
+                <div class="errors">
+                    {% for error in errors %}
+                    <span>{{error}}</span> {% endfor %} {{form.search(class="search-bar error")}}
+                </div>
+                {% else %} {{form.search(class ="search-bar")}} {% endif %} {{form.submit(class="btn")}}
+            </form>
+        </div>
+        {% if results %}
+        <section class="searched">
+            <div class="keyword">
+                {% if response %}
+                <span>Results for {{keyword}}</span> {% else %}
+                <span>We did not find any movie with name {{keyword}}</span> {% endif %}
+
+            </div>
+            <div class="result">
+                {% for result in results %}
+                <div class="results">
+                    <input type="checkbox" id="hover">
+                    <img src="{{url_for('static', filename ='./images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg')}}" alt="poster">
+                    <div class="info">
+                        <div class="title">{{result.title}}</div>
+                        <div class="date">
+                            {{result.release_date[:4]}}
+                        </div>
+                        <div class="genre">
+                            {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %}
+                            <span> {{list1[each]|replace("'","")|replace("[","")|replace("]","")}}</span> {% endfor %}
+                        </div>
+                        <div class="rating">
+                            {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                            <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                            <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                            <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                            <i class="fas fa-star star"></i>
+                            <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                            <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% else %}
+        <section class="home">
+            <div class="content">
+                <div class="content-title">
+                    <a href="#">Top rated</a>
+                </div>
+
+                <div class="content-main">
+
+                    <div class="content-wrap">
+                        {% for result in top%}
+                        <div class="results">
+                            <img src="{{url_for('static', filename ='./images/IMG_2893.jpg')}}" alt="poster">
+                            <div class="info">
+                                <div class="title">{{result.title}}</div>
+                                <div class="date">
+                                    {{result.release_date}}
+                                </div>
+                                <div class="genre">
+                                    {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %}
+                                    <span> {{list1[each]|replace("'","")|replace("[","")|replace("]","")}}</span> {% endfor %}
+                                </div>
+                                <div class="rating">
+                                    {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                                    <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                                    <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                                    <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                                    <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                                    <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                                    <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                    <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                                    <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-title">
+                        <a href="#">Recent</a>
+                    </div>
+
+                    <div class="content-main">
+                        <div class="content-wrap">
+                            {% for result in recent%}
+                            <div class="results">
+                                <img src="{{url_for('static', filename ='./images/black-panther-web.jpg')}}" alt="poster">
+                                <div class="info">
+                                    <div class="title">{{result.title}}</div>
+                                    <div class="date">
+                                        {{result.release_date}}
+                                    </div>
+                                    <div class="genre">
+                                        {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %}
+                                        <span> {{list1[each]|replace("'","")|replace("[","")|replace("]","")}}</span> {% endfor %}
+                                    </div>
+                                    <div class="rating">
+                                        {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                                        <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                        <i class="fas fa-star star"></i>
+                                        <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                        <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="content">
+                        <div class="content-title">
+                            <a href="#">Discover/Explore Movies</a>
+                        </div>
+
+                        <div class="content-main">
+                            <div class="content-wrap">
+                                {% for result in random%}
+                                <div class="results">
+                                    <img src="{{url_for('static', filename ='./images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg')}}" alt="poster">
+                                    <div class="info">
+                                        <div class="title">{{result.title}}</div>
+                                        <div class="date">
+                                            {{result.release_date}}
+                                        </div>
+                                        <div class="genre">
+                                            {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %}
+                                            <span>
+                                                {{list1[each]|replace("'","")|replace("[","")|replace("]","")}}</span> {% endfor %}
+                                        </div>
+                                        <div class="rating">
+                                            {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                                            <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                                            <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                                            <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                            <i class="fas fa-star star"></i>
+                                            <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                            <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                                            <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+        </section>
+        {% endif %}
+        </div>
+        <div class="music-div">
+
+        </div>
+        <div class="tv-div">
+
+        </div>
+
+</main>
+{% endblock %}

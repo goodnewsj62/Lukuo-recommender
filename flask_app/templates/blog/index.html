@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lukuo intro home</title>
+
+    <!-- link to fontawesome website -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Itim&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename = './fontawesome-free-5.14.0-web/css/all.css')}}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename= 'home.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="head">
+                <span>
+                        <h2>Lukuo</h2>
+                    </span>
+            </div>
+
+            <div class="desp">
+                <div class="desp-wrapper">
+                    <h1>African Media Recommender</h1>
+                    <p>Media recommender for African movie and music</p>
+                    <div class="lnk">
+                        <a href="{{url_for('auth.register')}}">Sign Up</a>
+                        <a href="{{url_for('auth.login')}}">Sign in</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section class="section-one">
+                <h3>Recommendations</h3>
+                <p>Lukuo helps to recommend movies and audio ranging from different African nations</p>
+                <picture>
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/test/main-screen.jpg')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/test/medium/main-screen.jpg')}}">
+                    <img src="{{url_for('static', filename = './images/test/little/main-screen.jpg')}}" alt="image-description">
+                </picture>
+            </section>
+            <section class="section-two">
+                <h3>Search media</h3>
+                <p>Lukuo allows you to search for media and then recommends other related media for you</p>
+                <picture>
+                    <source media="(min-width:1000px)" srcset="">
+                    <source media="(min-width: 700px)" srcset="">
+                    <img src="{{url_for('static', filename = './images/test/lukuo.png')}}" alt="image-description">
+                </picture>
+            </section>
+            <section class="section-three">
+                <h3>Top rated</h3>
+                <p>We provide top rated Media</p>
+                <picture>
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/test/movie-details-similar.jpg')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/test/meduim/movie-details-similar.jpg')}}">
+                    <img src="{{url_for('static', filename = './images/test/little/movie-details-similar.jpg')}}" alt="image-description">
+                </picture>
+            </section>
+            <section class="section-four">
+                <h3>Media Information</h3>
+                <p>Lukuo provides top-rated media</p>
+                <picture>
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/test/movie-details-fullpage.jpg')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/test/medium/movie-details-fullpage.jpg')}}">
+                    <img src="{{url_for('static', filename = './images/test/little/movie-details-fullpage.jpg')}}" alt="image-description">
+                </picture>
+            </section>
+            <div class="continue">
+                <p>
+                    Do you want to continue without signing in
+                    <strong style="color: red;">Lukuo will not be able to tailor make your recommendation to your
+                            taste</strong>
+                </p>
+                <span><a href="{{url_for('blog.recommend_home')}}"> continue</a></span>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-wrapper">
+                <a href="#">About|</a>
+                <a href="#">Contact|</a>
+                <a href="#">Policy|</a>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

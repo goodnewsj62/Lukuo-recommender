@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block title %}
+    <title>Lukuo recommender</title>{% endblock %}
+
+
+
+    <!-- link to fontawesome website -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Itim&family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{url_for('static', filename = './fontawesome-free-5.14.0-web/css/all.css')}}">
+
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}"> {% block style%}{% endblock %} {%block script%}{% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <input type="checkbox" id="check">
+        <input type="checkbox" id="user">
+        <header>
+            <div class="head">
+                <h2>Lukuo</h2>
+            </div>
+            <label for="check" class="check-label">
+                    <i class="fa fa-bars"></i>
+                    <i class="fas fa-angle-down"></i>
+                    <i class="fas fa-angle-up"></i>
+                </label>
+            <div class="auth">
+                {% if not current_user.is_authenticated %}
+                <span><a href="{{url_for('auth.login')}}">Login</a></span> {% endif %} {% if current_user.is_authenticated%}
+                <label for="user" class="user-label">
+                        <i class="fas fa-user"></i>
+                        <i class="fas fa-angle-down"></i>
+                        <i class="fas fa-angle-up"></i>
+                    </label>
+                <nav class="user">
+                    <ul>
+                        <li>{{current_user.email}}</li>
+                        <a href="#">Settings</a>
+                        <a href="{{url_for('auth.logout')}}">LogOut</a>
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+
+        </header>
+        <nav class="navbar">
+            <ul>
+                <span class="span">
+                        <h3 class="q-links">
+                            Links
+                        </h3>
+                        <li>
+                            <a href="{{url_for('blog.recommend_home')}}">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Top Rated
+                            </a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li style="display: none;">
+                            <a href="#">
+                                Rate More
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="#">
+                                Recently Added
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                List Of Genres
+                            </a>
+                        </li>
+                    </span> {% if current_user.is_authenticated %}
+                <span class="span">
+                        <h3 class="activity">
+                            Activity
+                        </h3>
+                        <li>
+                            <a href="#">
+                                Rating
+                            </a>
+                        </li>
+                    </span> {% endif %}
+                <input type="checkbox" id="music">
+                <input type="checkbox" id="movie">
+                <input type="checkbox" id="show">
+                <div class="genres">
+                    <h3>Genres</h3>
+                    <label for="movie" class="movie-label">
+                            <span>Movie</span>
+                            <i class="fas fa-angle-down"></i>
+                            <i class="fas fa-angle-up"></i>
+                        </label>
+                    <ul class="movie">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Animation</a></li>
+                        <li><a href="#">Comedy</a></li>
+                        <li><a href="#">More Genres</a></li>
+                    </ul>
+                    <label for="music" class="music-label">
+                            <span>Music</span>
+                            <i class="fas fa-angle-down"></i>
+                            <i class="fas fa-angle-up"></i>
+                        </label>
+                    <ul class="music">
+                        <li><a href="#">Afro Pop</a></li>
+                        <li><a href="#">Hip hop</a></li>
+                        <li><a href="#">Reggae</a></li>
+                        <li><a href="#">Jazz</a></li>
+                        <li><a href="#">More Genres</a></li>
+                    </ul>
+                    <label for="show" class="show-label">
+                            <span>Tv Series</span>
+                            <i class="fas fa-angle-down"></i>
+                            <i class="fas fa-angle-up"></i>
+                        </label>
+                    <ul class="show">
+                        <li><a href="#">Comedy</a></li>
+                        <li><a href="#">Romance</a></li>
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">More Genres</a></li>
+                    </ul>
+                </div>
+            </ul>
+        </nav>
+        <div class="message">
+            {% with messages = get_flashed_messages()%} {% if messages%} {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %} {% endif %} {% endwith %}
+        </div>
+
+        <div class="wrapper">
+            {% block content%} {% endblock %}
+        </div>
+        <footer>
+            <nav class="nav-one">
+                <h3> Learn more</h3>
+                <a href="#">
+                        About Lukuo
+                    </a>
+                <a href="#">
+                        Contact Us
+                    </a>
+                <a href="#">
+                        Privacy Policy
+                    </a>
+            </nav>
+            {% if current_user.is_authenticated %}
+            <nav class="nav-two">
+                <h3>Your Account</h3>
+                <a href="#">Settings</a>
+                <a href="#">Your Ratings</a>
+            </nav>
+            {% endif %}
+
+            <nav class="nav-three">
+                <h3>Help Lukuo</h3>
+                <a href="#">
+                        Add a title
+                    </a>
+                <a href="#">
+                        Give feedback
+                    </a>
+            </nav>
+        </footer>
+    </div>
+</body>
+
+</html>

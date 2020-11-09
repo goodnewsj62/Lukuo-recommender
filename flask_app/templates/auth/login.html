@@ -1,0 +1,45 @@
+{% extends 'base.html'%} {% block title %}
+<title>Lukuo Login Page</title>
+{% endblock %} {% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename = './login.css')}}"> {% endblock %} {% block content%}
+<main>
+    <section>
+        <div class="design">
+
+        </div>
+        <div class="form">
+            <h3>Sign In</h3>
+            <form action="" method="POST">
+                {{form.hidden_tag()}}
+                <div class="auth-div">
+                    {{form.username.label(class = "field-label")}} {% if form.username.errors%} {{form.username(class = "field error")}}
+                    <div class="errors">
+                        {% for error in form.username.errors %}
+                        <span>{{error}}</span> {% endfor %}
+                    </div>
+                    {%else%} {{form.username(class="field", id ="field")}} {% endif %}
+                </div>
+                <div class="auth-div">
+                    {{form.password.label(class = "field-label")}} {% if form.password.errors%} {{form.password(class = "field error")}}
+                    <div class="errors">
+                        {% for error in form.password.errors %}
+                        <span>{{error}}</span> {% endfor %}
+                    </div>
+                    {%else%} {{form.password(class="field")}} {% endif %}
+                </div>
+                <div>
+                    {{form.remember.label}} {{form.remember(class="remember")}}
+                </div>
+                <div class="submit">
+                    {{form.submit(class="btn")}}
+                </div>
+                <div class="regist">
+                    <span>You dont have an account?</span>
+                    <a href="{{url_for('auth.register')}}">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</main>
+{% endblock %}

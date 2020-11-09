@@ -1,0 +1,88 @@
+{% extends 'base.html'%} {% block title %}
+<title>Lukuo Register Page</title>
+{% endblock %} {% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename = './register.css')}}"> {% endblock %} {% block content%}
+<main>
+    <section>
+        <div class="design">
+
+        </div>
+        <div class="form">
+            <h3>Sign up</h3>
+            <form action="" method="POST">
+                {{form.hidden_tag()}}
+                <div class="auth-div">
+                    {{form.username.label(class = "field-label")}} {% if form.username.errors%} {{form.username(class = "field error")}}
+                    <div class="errors">
+                        {% for error in form.username.errors %}
+                        <span>{{error}}</span> {% endfor %}
+                    </div>
+                    {%else%} {{form.username(class="field", id ="field")}} {% endif %}
+
+                </div>
+                <div class="auth-div">
+                    {{form.email.label(class = "field-label")}} {% if form.email.errors%} {{form.email(class = "field error")}}
+                    <div class="errors">
+                        {% for error in form.email.errors %}
+                        <span>{{error}}</span> {% endfor %}
+                    </div>
+                    {%else%} {{form.email(class="field")}} {% endif %}
+                </div>
+                <div class="auth-div">
+                    {{form.password.label(class = "field-label")}} {% if form.password.errors%} {{form.password(class = "field error")}}
+                    <div class="errors">
+                        {% for error in form.password.errors %}
+                        <span>{{error}}</span> {% endfor %}
+                    </div>
+                    {%else%} {{form.password(class="field")}} {% endif %}
+                </div>
+                <div class="auth-div">
+                    {{form.confirm_password.label(class = "field-label")}} {% if form.confirm_password.errors%} {{form.confirm_password(class = "field error")}}
+                    <div class="errors">
+                        {% for error in form.confirm_password.errors %}
+                        <span>{{error}}</span> {% endfor %}
+                    </div>
+                    {%else%} {{form.confirm_password(class="field")}} {% endif %}
+                </div>
+                <div class="select-box">
+                    <div class="select-wrap">
+                        {{form.genre_a.label(class = "select-label")}} {% if form.genre_a.errors%} {{form.grenre_a(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_a.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_a(class="select")}} {% endif %}
+                    </div>
+                    <div class="select-wrap">
+                        {{form.genre_b.label(class = "select-label")}} {% if form.genre_b.errors%} {{form.grenre_b(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_b.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_b(class="select")}} {% endif %}
+                    </div>
+                    <div class="select-wrap">
+                        {{form.genre_c.label(class = "select-label")}} {% if form.genre_c.errors%} {{form.grenre_c(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_c.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_c(class="select")}} {% endif %}
+                    </div>
+                    <div class="select-wrap">
+                        {{form.genre_d.label(class = "select-label")}} {% if form.genre_d.errors%} {{form.grenre_d(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_d.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_d(class="select")}} {% endif %}
+                    </div>
+                </div>
+                <div class="submit">
+                    {{form.submit(class="btn")}}
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}
