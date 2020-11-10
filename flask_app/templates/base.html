@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ url_for('blog.top')}}">
                                 Top Rated
                             </a>
                         </li>
@@ -74,9 +74,14 @@
                                 Rate More
                             </a>
                         </li>
+                        <li style="display: none;">
+                            <a href="#">
+                                Recommended for you
+                            </a>
+                        </li>
                         {% endif %}
                         <li>
-                            <a href="#">
+                            <a href="{{url_for('blog.recent')}}">
                                 Recently Added
                             </a>
                         </li>
