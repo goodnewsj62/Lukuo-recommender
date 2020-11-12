@@ -1,0 +1,102 @@
+main {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 10px;
+    margin-bottom: 6rem;
+}
+
+.result {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.cover-link {
+    text-decoration: none;
+    color: initial;
+}
+
+.inline-link {
+    text-decoration: none;
+    color: initial;
+}
+
+.inline-link:hover {
+    text-decoration: underline;
+}
+
+.results:hover {
+    box-shadow: 1px 3px 4px #808080;
+}
+
+.results {
+    width: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    margin-right: 5px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 12px;
+    border-radius: 3px;
+}
+
+.results img {
+    width: 145px;
+    height: 300px;
+    display: block;
+}
+
+.info {
+    width: 145px;
+    height: 200px;
+    display: inline-flex;
+    flex-flow: column nowrap;
+    position: absolute;
+    background-color: #fff;
+    bottom: -145px;
+    left: 0px;
+    padding: 7px;
+}
+
+#hover {
+    display: none;
+}
+
+.info:hover,
+#hover:checked~.info {
+    bottom: -25px;
+}
+
+.info .title {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.info .date {
+    margin-top: 5px;
+}
+
+.info .genre {
+    margin-top: 5px;
+}
+
+.genre span {
+    margin-top: 2px;
+    padding: 2px;
+    background-color: #1e90ff;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.rating {
+    margin-top: 5px;
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+
+@media screen and (min-width:900px) {
+    main {
+        padding: 10px 80px;
+    }
+}

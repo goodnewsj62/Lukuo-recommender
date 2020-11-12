@@ -1,0 +1,100 @@
+{% extends 'base.html'%} {% block title %}
+<title>movie details</title>{% endblock %} {% block style %}
+<link rel="stylesheet" href="{{url_for('static'
+    , filename = './details.css')}}"> {% endblock %} {% block content %}
+<main>
+    <section class="little-info">
+        <div class="thriller">
+            <video src="#" controls="controls">
+            </video>
+        </div>
+        <div class="movie-info">
+            <h1 class="title">{{movie.title}}</h1>
+            <div class="rating">
+                {% set rank = (movie.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                <i class="fas fa-star star"></i>
+                <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+            </div>
+            <div class="ave">
+                <p>Average of {{movie.vote_count}} ratings</p>
+
+                <h3> {{(movie.vote_average|float/1.5)|round(1)}} <i class="fas fa-bar-chart"></i></h3>
+            </div>
+            <div class="ge">
+                <p>Genres</p>
+                <div class="genre">
+                    {% set list1 = movie.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","") %}
+                    <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="main-info">
+        <div class="detailed-info">
+            <p>
+                {{movie.overview}}
+            </p>
+        </div>
+        <div class="other-info">
+            <h4 class="date-info">{{movie.release_date[:4]}}</h4>
+            <!-- <span> movie.duration}}</span> -->
+            <h5> Languages</h5>
+            {% set diction = {'en':'English','es':'Espanol'}%}
+            <span> {{diction[movie.original_language]}}</span>
+            <h5>Directors</h5>
+            <span>{{movie.director}}</span>
+            <h5>Cast</h5>
+            {% set list1 = movie.cast.split(',')%} {% for each in range(list1|length)%}
+            <span> {{list1[each]|replace("[","")|replace("'","")|replace("]","")}}</span> {% endfor %}
+        </div>
+    </section>
+    <section class="recom">
+        <h3>Similar Movies</h3>
+
+        <div class="content-main">
+
+            <div class="content-wrap">
+                {% for result in result%}
+                <a href="{{url_for('blog.details',movie_id = result.id)}}" class="cover-link">
+                    <div class="results">
+                        <img src="{{url_for('static', filename ='./images/black-panther-web.jpg')}}" alt="poster">
+                        <div class="info">
+                            <div class="title"><a class="inline-link" href="{{url_for('blog.details', movie_id = result.id)}}">{{result.title}}</a>
+                            </div>
+                            <div class="date">
+                                {{result.release_date[:4]}}
+                            </div>
+                            <div class="genre">
+                                {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","") %}
+                                <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
+                            </div>
+                            <div class="rating">
+                                {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                                <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                                <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                <i class="fas fa-star star"></i>
+                                <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

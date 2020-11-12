@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>Hi</h1>
-</body>
-</html>
+{% extends 'base.html'%} {% block title%}
+<title>{{title}}</title>
+{% endblock %} {% block style%}
+<link rel="stylesheet" href="{{url_for('static', filename = './all.css')}}"> {% endblock%} {% block content %}
+<main>
+    <div class="all-title">
+        <p>Results for </p>
+        {% if name %}
+        <h3 style="text-transform: capitalize;">{{name}}</h3>
+        {% else %}
+        <h3 style="text-transform: capitalize;">{{title}}</h3>
+        {% endif %}
+    </div>
+
+    <div class="result">
+        {% for result in movie %}
+        <a href="{{url_for('blog.details',movie_id = result.id)}}" class="cover-link">
+            <div class="results">
+                <input type="checkbox" id="hover">
+                <img src="{{url_for('static', filename ='./images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg')}}" alt="poster">
+                <div class="info">
+                    <div class="title"><a class="inline-link" href="{{url_for('blog.details', movie_id = result.id)}}">{{result.title}}</a></div>
+                    <div class="date">
+                        {{result.release_date[:4]}}
+                    </div>
+                    <div class="genre">
+                        {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","") %}
+                        <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
+                    </div>
+                    <div class="rating">
+                        {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
+                        <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
+                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
+                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                        <i class="fas fa-star star"></i>
+                        <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
+                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                        <i class="fas fa-star star"></i> {%else %} {% for i in range(5)%}
+                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

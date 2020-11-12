@@ -86,7 +86,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{url_for('blog.movie_genres')}}">
                                 List Of Genres
                             </a>
                         </li>
@@ -112,10 +112,10 @@
                             <i class="fas fa-angle-up"></i>
                         </label>
                     <ul class="movie">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Animation</a></li>
-                        <li><a href="#">Comedy</a></li>
-                        <li><a href="#">More Genres</a></li>
+                        <li><a href="{{url_for('blog.movie_genre',genre = 'action')}}">Action</a></li>
+                        <li><a href="{{url_for('blog.movie_genre',genre = 'animation')}}">Animation</a></li>
+                        <li><a href="{{url_for('blog.movie_genre',genre = 'comedy')}}">Comedy</a></li>
+                        <li><a href="{{url_for('blog.movie_genres')}}">More Genres</a></li>
                     </ul>
                     <label for="music" class="music-label">
                             <span>Music</span>

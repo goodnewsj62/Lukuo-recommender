@@ -365,6 +365,12 @@ footer a:active {
     .navbar div {
         padding: 0px;
     }
+    .genres {
+        margin-left: 10px;
+    }
+    .span {
+        margin: 5px;
+    }
     .movie-label,
     .music-label,
     .show-label {
