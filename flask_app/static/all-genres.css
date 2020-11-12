@@ -1,0 +1,45 @@
+main {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    padding: 10px;
+}
+
+.page-title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5a5a5a;
+}
+
+.list-genre {
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px;
+    margin-top: 1rem;
+}
+
+.list-genre a {
+    text-decoration: none;
+    color: #1e90ff;
+    margin-bottom: 10px;
+}
+
+.list-genre a:hover,
+.list-genre a:active {
+    text-decoration: underline;
+}
+
+@media screen and (min-width:700px) {
+    main {
+        padding: 0.7rem 5rem;
+    }
+    .list-genre {
+        height: auto;
+        flex-wrap: nowrap;
+    }
+}
