@@ -52,7 +52,7 @@
                                 {{result.release_date[:4]}}
                             </div>
                             <div class="genre">
-                                {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","") %}
+                                {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(' ','') %}
                                 <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
                             </div>
                             <div class="rating">
@@ -98,7 +98,7 @@
                                         {{result.release_date[:4]}}
                                     </div>
                                     <div class="genre">
-                                        {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","") %}
+                                        {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(' ','') %}
                                         <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
                                     </div>
                                     <div class="rating">

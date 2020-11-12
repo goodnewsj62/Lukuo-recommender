@@ -119,6 +119,7 @@ def recommended():
 
 @blog.route('/movie/genres/<string:genre>', methods=['GET'])
 def movie_genre(genre):
+
     movie = Movie.query.filter(Movie.genres.contains(genre)).all()
     if len(movie) == 0:
         return abort(404)
