@@ -154,8 +154,9 @@ main {
     border-radius: 2px;
 }
 
-.rating {
+.inline-rating {
     margin-top: 5px;
+    height: 30px;
     display: inline-flex;
     justify-content: space-evenly;
 }
