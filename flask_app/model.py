@@ -1,46 +1,47 @@
-from flask_app.database import Base
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column,Integer,String,Table,ForeignKey
+from flask_app import db
 from flask_login import UserMixin
 import datetime
 
 
-association_table = Table('association', Base.metadata,
-                          Column('user_id',Integer,ForeignKey('user.id')),
-                          Column('movie_id',Integer,ForeignKey('movie.id'))
-                          )
+association_table = db.Table('association',
+                             db.Column('user_id', db.Integer,
+                                       db.ForeignKey('user.id')),
+                             db.Column('movie_id', db.Integer,
+                                       db.ForeignKey('movie.id'))
+                             )
 
-class User(Base,UserMixin):
+
+class User(db.Model, UserMixin):
     __tablename__ = 'user'
 
-    id = Column(Integer, primary_key=True)
-    username = Column(String(30), unique=True,nullable=False)
-    email = Column(String(30), unique=True, nullable=False)
-    password = Column(String(50), nullable=False)
-    genre_a = Column(String(20),nullable=False, default='')
-    genre_b = Column(String(20),nullable=False, default='')
-    genre_c = Column(String(20),nullable=False, default='')
-    genre_d = Column(String(20),nullable=False, default='')
-    movie = relationship('Movie', secondary =association_table, backref = "users")
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(30), unique=True, nullable=False)
+    email = db.Column(db.String(30), unique=True, nullable=False)
+    password = db.Column(db.String(50), nullable=False)
+    genre_a = db.Column(db.String(20), nullable=False, default='')
+    genre_b = db.Column(db.String(20), nullable=False, default='')
+    genre_c = db.Column(db.String(20), nullable=False, default='')
+    genre_d = db.Column(db.String(20), nullable=False, default='')
+    movie = db.relationship(
+        'Movie', secondary=association_table, backref="users")
 
-class Movie(Base):
+
+class Movie(db.Model):
     __tablename__ = 'movie'
-    id = Column(Integer,primary_key=True)
-    title = Column(String(30), nullable=False)
-    homepage = Column(String(30), nullable=False)
-    cast = Column(String(100), nullable=False)
-    crew = Column(String(300), nullable=False)
-    release_date = Column(String(20), nullable=False)
-    original_language = Column(String(10), nullable=False)
-    production_countries = Column(String(30), nullable=False)
-    tagline = Column(String(30), nullable=False)
-    genres = Column(String(100), nullable=False)
-    overview = Column(String(100), nullable=False)
-    director = Column(String(30), nullable=False)
-    vote_count = Column(String(15), nullable=False)
-    vote_average =Column(String(15), nullable=False)
-    keywords = Column(String(50), nullable=False)
-    soup = Column(String(100), nullable=False)
-    rating = Column(Integer,nullable=False, default =0)
-
-
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(30), nullable=False)
+    homepage = db.Column(db.String(30), nullable=False)
+    cast = db.Column(db.String(100), nullable=False)
+    crew = db.Column(db.String(300), nullable=False)
+    release_date = db.Column(db.String(20), nullable=False)
+    original_language = db.Column(db.String(10), nullable=False)
+    production_countries = db.Column(db.String(30), nullable=False)
+    tagline = db.Column(db.String(30), nullable=False)
+    genres = db.Column(db.String(100), nullable=False)
+    overview = db.Column(db.String(100), nullable=False)
+    director = db.Column(db.String(30), nullable=False)
+    vote_count = db.Column(db.Integer, nullable=False)
+    vote_average = db.Column(db.Float, nullable=False)
+    keywords = db.Column(db.String(50), nullable=False)
+    soup = db.Column(db.String(100), nullable=False)
+    rating = db.Column(db.Integer, nullable=False, default=0)

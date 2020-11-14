@@ -95,6 +95,24 @@ main {
     justify-content: space-evenly;
 }
 
+.query {
+    margin: 3rem 0;
+}
+
+.query a {
+    text-decoration: none;
+    padding: 6px 20px;
+    border: 1px solid rgba(128, 128, 128, 0.6);
+    border-radius: 4px;
+    background-color: #fff;
+    color: coral;
+}
+
+.query a:hover {
+    background-color: #4ca2f8;
+    color: #fff;
+}
+
 @media screen and (min-width:900px) {
     main {
         padding: 10px 80px;

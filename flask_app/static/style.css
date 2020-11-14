@@ -280,7 +280,15 @@ header {
 }
 
 #check:checked~.navbar {
+    position: fixed;
     left: 0;
+}
+
+#check:checked~header {
+    position: fixed;
+    background-color: #fff;
+    z-index: 100;
+    pointer-events: all;
 }
 
 #check:checked~header .check-label .fa-angle-up {
