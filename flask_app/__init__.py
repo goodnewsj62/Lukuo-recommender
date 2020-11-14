@@ -12,7 +12,7 @@ login_manager.login_view = 'auth.login'
 login_manager.login_message_category = 'info'
 
 
-def create_app(config_file = Config):
+def create_app(config_file=Config):
     app = Flask(__name__, instance_relative_config=False)
     app.config.from_object(config_file)
 
@@ -29,4 +29,3 @@ def create_app(config_file = Config):
         app.register_blueprint(auth)
 
         return app
-
