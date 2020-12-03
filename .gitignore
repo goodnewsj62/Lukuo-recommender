@@ -9,3 +9,7 @@ tmdb_5000_credits.csv
 tmdb_5000_movies.csv
 tmdb.csv
 newtmdb.csv
+*/__pycache__
+*/__pycache__/*
+/migrations
+/migrations/*
