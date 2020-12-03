@@ -44,6 +44,46 @@
                     </div>
                     {%else%} {{form.confirm_password(class="field")}} {% endif %}
                 </div>
+                <div class="genre-banner">
+                    <h3>Select Favourite Movie Genres</h3>
+                </div>
+                <div class="select-box">
+                    <div class="select-wrap">
+                        {{form.genre_e.label(class = "select-label")}} {% if form.genre_e.errors%} {{form.grenre_e(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_e.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_e(class="select")}} {% endif %}
+                    </div>
+                    <div class="select-wrap">
+                        {{form.genre_f.label(class = "select-label")}} {% if form.genre_f.errors%} {{form.grenre_f(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_f.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_f(class="select")}} {% endif %}
+                    </div>
+                    <div class="select-wrap">
+                        {{form.genre_g.label(class = "select-label")}} {% if form.genre_g.errors%} {{form.grenre_g(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_g.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_g(class="select")}} {% endif %}
+                    </div>
+                    <div class="select-wrap">
+                        {{form.genre_h.label(class = "select-label")}} {% if form.genre_h.errors%} {{form.grenre_h(class = "select error")}}
+                        <div class="errors">
+                            {% for error in form.genre_h.errors %}
+                            <span>{{error}}</span> {% endfor %}
+                        </div>
+                        {%else%} {{form.genre_h(class="select")}} {% endif %}
+                    </div>
+                </div>
+                <div class="genre-banner">
+                    <h3>Select Favourite Music Genres</h3>
+                </div>
                 <div class="select-box">
                     <div class="select-wrap">
                         {{form.genre_a.label(class = "select-label")}} {% if form.genre_a.errors%} {{form.grenre_a(class = "select error")}}

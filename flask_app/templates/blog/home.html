@@ -1,65 +1,98 @@
 {% extends 'base.html'%} {% block title %}
 <title>Lukuo Home</title>
 {% endblock %} {% block style %}
-<link rel="stylesheet" href="{{url_for('static', filename = './landing.css')}}"> {% endblock %} {% block content%}
+<link rel="stylesheet" href="{{url_for('static', filename = './landing.css')}}"> {%if viewtype == 'movie'%}
+<style>
+    .select .bar {
+        bottom: 0;
+        left: 0;
+    }
+</style>
+{% endif %} {%if viewtype == 'music' %}
+<style>
+    .select .bar {
+        left: 33.3%;
+    }
+</style>
+{%endif%} {%if viewtype == 'tv' %}
+<style>
+    .select .bar {
+        left: 66.6%;
+    }
+</style>
+{% endif %} {% endblock %} {% block content%}
 <main>
-    <input type="radio" checked name="radio" id="mov">
-    <input type="radio" name="radio" id="mus">
-    <input type="radio" name="radio" id="tv">
     <div class="select">
         <div class="select-wrap">
-            <label for="mov" class="mov">
-                movie
-            </label>
-            <label for="mus" class="mus">
-                music
-            </label>
-            <label for="tv" class="tv">
-                tv-series
-            </label>
+            <div class="mov">
+                <a style="font: inherit;color:inherit;text-decoration:none;" href="{{url_for('blog.recommend_home')}}">
+                    movie
+                </a>
+            </div>
+            <div class="mus">
+                <a style="font: inherit;color:inherit;text-decoration:none;" href="{{url_for('blog.music_recommend')}}">
+                    music
+                </a>
+            </div>
+            <div class="tv">
+                <a style="font: inherit;color:inherit;text-decoration:none;" href="{{url_for('blog.tv_recommend')}}">
+                    tv-series
+                </a>
+            </div>
         </div>
         <div class="bar">
         </div>
     </div>
+    {%if viewtype == 'movie' or viewtype == 'tv'%}
     <div class="movie-div">
+        {% if viewtype == "movie" %} {%set placehold = "search for movies" %} {% else %}
+        {%set placehold = "search for tv-series" %} {% endif %}
         <div class="search">
             <form action="" method="POST">
                 {{form.hidden_tag()}} {%if form.search.errors%}
                 <div class="errors">
-                    {% for error in errors %}
-                    <span>{{error}}</span> {% endfor %} {{form.search(class="search-bar error")}}
+                    {% for error in form.search.errors %}
+                    <span>{{error}}</span> {% endfor %} {{form.search(class="search-bar error", placeholder=placehold)}}
                 </div>
-                {% else %} {{form.search(class ="search-bar")}} {% endif %} {{form.submit(class="btn")}}
+                {% else %} {{form.search(class ="search-bar" ,placeholder = placehold)}} {% endif %}
+                {{form.submit(class="btn")}}
             </form>
         </div>
-        {% if results %}
+        {% if keyword %}
         <section class="searched">
             <div class="keyword">
                 {% if response %}
                 <span>Results for {{keyword}}</span> {% else %}
                 <span>We did not find any movie with name {{keyword}}</span> {% endif %}
-
             </div>
+            {% if results %}
             <div class="result">
                 {% for result in results %}
-                <a href="{{url_for('blog.details',movie_id = result.id)}}" class="cover-link">
+                <a href="{{url_for(('blog.details'+'_'+viewtype),id = result.id)}}" class="cover-link">
                     <div class="results">
                         <input type="checkbox" id="hover">
-                        <img src="{{url_for('static', filename ='./images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg')}}" alt="poster">
+                        <img src="{{url_for('static', filename ='./images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg')}}"
+                            alt="poster">
                         <div class="info">
-                            <div class="title"><a class="inline-link" href="{{url_for('blog.details', movie_id = result.id)}}">{{result.title}}</a></div>
+                            <div class="title"><a class="inline-link title-link"
+                                    href="{{url_for(('blog.details'+'_'+viewtype), id = result.id)}}">{{result.title}}</a>
+                            </div>
                             <div class="date">
                                 {{result.release_date[:4]}}
                             </div>
                             <div class="genre">
-                                {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(' ','') %}
-                                <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
+                                {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %}
+                                {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(" ","") %}
+                                <a class="inline-link"
+                                    href="{{url_for(('blog.genre'+'_'+viewtype), genre = gen)}}"><span>{{gen}}</span></a>
+                                {% endfor %}
                             </div>
                             <div class="rating">
                                 {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
                                 <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
                                 <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
-                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                {% for i in range(3)%}
                                 <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
                                 <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
                                 <i class="fas fa-star star"></i>
@@ -73,40 +106,48 @@
                 </a>
                 {% endfor %}
             </div>
+            {% endif %}
         </section>
-        {% else %}
+        {%else%}
         <section class="home">
             {% for key,value in context.items() %}
             <div class="content">
                 {% set link = key.split('/') %} {% set link= link[0].split()%}
 
                 <div class="content-title">
-                    <a href="{{url_for('blog.'+link[0])}}" style="text-transform: capitalize;">{{key}}</a>
+                    <a href="{{url_for('blog.'+link[0]+'_'+viewtype)}}" style="text-transform: capitalize;">{{key}}</a>
                 </div>
 
                 <div class="content-main">
 
                     <div class="content-wrap">
                         {% for result in value %}
-                        <a href="{{url_for('blog.details',movie_id = result.id)}}" class="cover-link">
+                        <a href="{{url_for(('blog.details'+'_'+viewtype),id = result.id)}}" class="cover-link">
                             <div class="results">
                                 <img src="{{url_for('static', filename ='./images/IMG_2893.jpg')}}" alt="poster">
                                 <div class="info">
-                                    <div class="title"><a class="inline-link" href="{{url_for('blog.details', movie_id = result.id)}}">{{result.title}}</a>
+                                    <div class="title"><a class="inline-link title-link"
+                                            href="{{url_for(('blog.details'+'_'+viewtype), id = result.id)}}">{{result.title}}</a>
                                     </div>
                                     <div class="date">
                                         {{result.release_date[:4]}}
                                     </div>
                                     <div class="genre">
-                                        {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(' ','') %}
-                                        <a class="inline-link" href="{{url_for('blog.movie_genre', genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
+                                        {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %}
+                                        {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(" ","") %}
+                                        <a class="inline-link"
+                                            href="{{url_for(('blog.genre'+'_'+viewtype), genre = gen)}}"><span>{{gen}}</span></a>
+                                        {% endfor %}
                                     </div>
                                     <div class="rating">
                                         {% set rank = (result.vote_average|float/1.5)|round|int %} {% if rank == 1%}
                                         <i style="color:coral;" class="fas fa-star star"></i> {% for i in range(4)%}
-                                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%} {% for i in range(2)%}
-                                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% for i in range(3)%}
-                                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%} {% for i in range(3)%}
+                                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 2%}
+                                        {% for i in range(2)%}
+                                        <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
+                                        {% for i in range(3)%}
+                                        <i class="fas fa-star star"></i> {% endfor %} {%elif rank == 3%}
+                                        {% for i in range(3)%}
                                         <i style="color:coral;" class="fas fa-star star"></i> {% endfor %}
                                         <i class="fas fa-star star"></i>
                                         <i class="fas fa-star star"></i> {%elif rank == 4%} {% for i in range(4)%}
@@ -125,11 +166,135 @@
         </section>
         {% endif %}
     </div>
+    {% else %}
     <div class="music-div">
+        <div class="search">
+            <form action="" method="POST">
+                {{form.hidden_tag()}} {%if form.search.errors%}
+                <div class="errors">
+                    {% for error in form.search.errors %}
+                    <span>{{error}}</span> {% endfor %}
+                    {{form.search(class="search-bar error", placeholder="search for music")}}
+                </div>
+                {% else %} {{form.search(class ="search-bar", placeholder="search for music")}} {% endif %}
+                {{form.submit(class="btn")}}
+            </form>
+        </div>
+        {%if keyword %}
+        <section class="searched">
+            <div class="keyword">
+                {%if response %}
+                <span> Results for {{keyword}}
+                </span> {% else %}
+                <span> We did not find any music with the name {{keyword}}
+                </span> {% endif %}
+            </div>
+            {% if results %}
+            <div class="result">
+                {% for result in results %}
+                <a href="{{url_for(('blog.details'+'_'+viewtype),id = result.id)}}" class="cover-link">
+                    <div class="results">
+                        <input type="checkbox" id="hover">
+                        <img src="{{url_for('static', filename ='./images/WIZKID-COVER-web-1-788x1114-1.jpg')}}"
+                            alt="poster">
+                        <div class="info">
+                            <div class="title">
+                                <a class="inline-link title-link"
+                                    href="{{url_for(('blog.details'+'_'+viewtype), id = result.id)}}">
+                                    {{result.title}}
+                                </a>
+                            </div>
+                            <div class="artist">
+                                {{result.artist_name}}
+                            </div>
+                            {% if result.year == 0%}
+                            <div class="date">
+                                null
+                            </div>
+                            {% else %}
+                            <div class="date">
+                                {%if result.year == 0%} null {%else%} {{result.year}}{%endif%}
+                            </div>
+                            {% endif %}
+                            <div class="genre">
+                                <a class="inline-link"
+                                    href="{{url_for(('blog.genre'+'_'+viewtype), genre = result.genres)}}">
+                                    <span>{{result.genres}}</span></a>
+                            </div>
+                            <div class="rating">
+                                {% set rank = 5 - result.rating %} {%for n in range(result.rating)%}
+                                <i style="color:coral;" class="fas fa-star star"></i> {% endfor %} {% if rank%}
+                                {% for n in range(rank)%}
+                                <i style="color:#1e90ff;" class="fas fa-star star"></i> {% endfor %} {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {%endif%}
+        </section>
+        {%else%}
+        <section class="home">
+            {%for key, value in context.items()%}
+            <div class="content">
+                {%set link = key.split('/') %} {% set link = link[0].split() %}
+                <div class="content-title">
+                    <a href="{{url_for('blog.'+link[0]+'_'+viewtype)}}" style="text-transform: capitalize;">{{key}}</a>
+                </div>
+
+                <div class="content-main">
+                    <div class="content-wrap">
+                        {%for result in value %}
+                        <a href="{{url_for(('blog.details'+'_'+viewtype),id = result.id)}}" class="cover-link">
+                            <div class="results">
+                                <input type="checkbox" id="hover">
+                                <img src="{{url_for('static', filename ='./images/9c4d40ccf8279f6fbd1d86f0480ddb90.jpg')}}"
+                                    alt="poster">
+                                <div class="info">
+                                    <div class="title"> <a class="inline-link title-link"
+                                            href="{{url_for(('blog.details'+'_'+viewtype), id = result.id)}}">
+                                            {{result.title}}
+                                        </a>
+                                    </div>
+                                    <div class="artist">
+                                        {{result.artist_name}}
+                                    </div>
+                                    {%if result.year == 0%}
+                                    <div>
+                                        Null
+                                    </div>
+                                    {%else%}
+                                    <div class="date">
+                                        {%if result.year == 0%} null {%else%} {{result.year}}{%endif%}
+                                    </div>
+                                    {%endif%}
+                                    <div class="genre">
+
+                                        <a class="inline-link"
+                                            href="{{url_for(('blog.genre'+'_'+viewtype), genre = result.genres)}}">
+                                            <span>
+                                                {{result.genres}} </span></a>
+                                    </div>
+                                    <div class="rating">
+                                        {%set rank = 5 - result.rating%} {%for n in range(result.rating)%}
+                                        <i style="color:coral;" class="fas fa-star star"> </i> {% endfor %} {%if rank%}
+                                        {%for n in range(rank)%}
+                                        <i style="color:#1e90ff;" class="fas fa-star star"> </i> {% endfor %} {%endif%}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        {%endfor %}
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+        </section>
+        {% endif %}
 
     </div>
-    <div class="tv-div">
+    {% endif %}
 
-    </div>
 </main>
 {% endblock %}

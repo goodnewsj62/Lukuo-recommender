@@ -1,0 +1,116 @@
+main {
+    min-height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.settings-links {
+    margin-top: 10px;
+    min-height: 150px;
+}
+
+.settings-links div {
+    padding: 12px 6px;
+}
+
+.settings-links div a {
+    font-family: inherit;
+    text-decoration: none;
+    color: #1e90ff;
+}
+
+.error {
+    border-bottom: 1px solid red;
+}
+
+.errors {
+    margin: 5px 0px;
+    height: auto;
+}
+
+.errors span {
+    color: red;
+}
+
+.forms {
+    width: 100%;
+}
+
+.forms form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-div {
+    display: inline-flex;
+    flex-direction: column;
+    padding: 5px 15px;
+}
+
+.field {
+    height: 30px;
+    border: 0.5px solid grey;
+    outline-color: #1e90ff;
+    padding: 10px;
+}
+
+.field-label {
+    display: block;
+}
+
+.submit {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.btn {
+    border: none;
+    color: #fff;
+    padding: 6px 15px;
+    background-color: #d35113;
+    border-radius: 3pxs;
+}
+
+.submit-special {
+    width: 30%;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div h3 {
+    color: #f33333;
+    padding: 1rem;
+}
+
+@media screen and (min-width: 700px) {
+    .forms {
+        width: 60%;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    main {
+        flex-flow: row;
+    }
+    .select {
+        width: 50%;
+    }
+    .forms {
+        padding: 5px 170px;
+    }
+}

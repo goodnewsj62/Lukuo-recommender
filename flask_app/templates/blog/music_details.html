@@ -1,0 +1,125 @@
+{% extends 'base.html' %} {% block title%}
+<title>Music Details</title>
+{% endblock %} {% block style%}
+<link rel="stylesheet" href="{{url_for('static', filename = 'music_details.css')}}"> {% endblock%} {% block content %}
+<main>
+    <section class="title-info">
+        <picture>
+            <source media="(min-width:1000px)"
+                srcset="{{url_for('static', filename ='./images/large/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
+            <source media="(min-width: 600px)"
+                srcset="{{url_for('static', filename ='./images/medium/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
+            <source media="(min-width: 370px)"
+                srcset="{{url_for('static', filename ='./images/medium/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
+            <img src="{{url_for('static', filename ='./images/WIZKID-COVER-web-1-788x1114-1.jpg')}}" alt="poster">
+        </picture>
+        <div class="music-info">
+            <h2 class="title">{{music.title}}</h2>
+            <div class="rating">
+                {%set rank = 5 - music.rating%} {%for n in range(music.rating)%}
+                <i style="color:coral;" class="fas fa-star star"> </i> {% endfor %} {%if rank%} {%for n in range(rank)%}
+                <i style="color:#1e90ff;" class="fas fa-star star"> </i> {% endfor %} {%endif%}
+            </div>
+            <div class="more-info">
+                <p class="artist">
+                    by
+                    <span>
+                        {{music.artist_name}}
+                    </span>
+                </p>
+                {%if date%}
+                <span class="date">
+                    {{music.date}}
+                </span> {%else%}
+                <span class="date">
+                    {%if music.year == 0%}
+                    null
+                    {%else%}
+                    {{music.year}}
+                    {%endif%}
+                </span> {%endif%}
+            </div>
+        </div>
+    </section>
+    <section class="other-info">
+        <div class="info-one">
+            <h5>
+                Produced by:
+            </h5>
+            <p>
+                {%if music.producer%} {{music.producer}} {%else%} null {%endif%}
+            </p>
+            <h5>
+                Artist:
+            </h5>
+            <p>
+                {%if music.artist_name%} {{music.artist_name}} {%else%} null {%endif%}
+            </p>
+            <h5>
+                Label
+            </h5>
+            <p>
+                {%if music.label%} {{music.label}} {%else%} null {%endif%}
+            </p>
+        </div>
+        <div class="info-two">
+            <h5>
+                country produced
+            </h5>
+            <p>
+                {%if music.country%} {{music.country}} {%else%} null {%endif%}
+            </p>
+            <h5>
+                languages
+            </h5>
+            <p>
+                {%if music.languages%} {{music.languages}} {%else%} English {%endif%}
+            </p>
+            <h5>
+                Genres
+            </h5>
+            <p>
+                {{music.genres}}
+            </p>
+        </div>
+    </section>
+    <section class="recom">
+        <h3>Similar Music's</h3>
+
+        <div class="content-wrap">
+            {% for result in result%}
+            <a href="{{url_for('blog.details'+'_'+ viewtype ,id = result.id)}}" class="cover-link">
+                <div class="results">
+                    <img src="{{url_for('static', filename ='./images/WIZKID-COVER-web-1-788x1114-1.jpg')}}"
+                        alt="poster">
+
+                    <div class="info">
+                        <div class="title"><a style="font-family: inherit;" class="inline-link"
+                                href="{{url_for('blog.details'+'_'+viewtype, id = result.id)}}">{{result.title}}</a>
+                        </div>
+                        <div class="artist">
+                            {{result.artist_name}}
+                        </div>
+                        <div class="date">
+                            {%if result.year == 0%} null {%else%} {{result.year}}{%endif%}
+                        </div>
+                        <div class="genre">
+                            <a class="inline-link"
+                                href="{{url_for(('blog.genre'+'_'+viewtype), genre = result.genres)}}">
+                                <span>
+                                    {{result.genres}} </span></a>
+                        </div>
+                        <div class="inline-rating">
+                            {%set rank = 5 - result.rating%} {%for n in range(result.rating)%}
+                            <i style="color:coral;" class="fas fa-star star"> </i> {% endfor %} {%if rank%}
+                            {%for n in range(rank)%}
+                            <i style="color:#1e90ff;" class="fas fa-star star"> </i> {% endfor %} {%endif%}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}

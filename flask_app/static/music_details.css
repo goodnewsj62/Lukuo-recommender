@@ -1,0 +1,225 @@
+main {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.title-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.title-info img {
+    display: block;
+    width: 100%;
+}
+
+.music-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.music-info h2,
+.music-info div {
+    margin-top: 1rem;
+}
+
+.more-info {
+    width: 100%;
+    align-self: flex-start;
+    display: inline-flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.more-info p {
+    font-size: 0.9rem;
+}
+
+.more-info p>span {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.other-info {
+    min-height: 200px;
+    display: inline-flex;
+    width: 100%;
+    padding: 2rem 0.8rem;
+    justify-content: space-between;
+}
+
+.other-info h5 {
+    color: #d35113;
+    margin-top: 5px;
+}
+
+.other-info p {
+    margin-top: 5px;
+}
+
+.info-one,
+.info-two {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.settings-links {
+    margin-top: 20px;
+}
+
+.recom {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.recom h3 {
+    margin: 15px 0px;
+}
+
+.result {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.cover-link {
+    text-decoration: none;
+    color: initial;
+}
+
+.inline-link {
+    text-decoration: none;
+    color: initial;
+}
+
+.inline-link:hover {
+    text-decoration: underline;
+}
+
+.results:hover {
+    box-shadow: 1px 3px 4px #808080;
+}
+
+.results {
+    width: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    margin-right: 5px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 12px;
+    border-radius: 3px;
+}
+
+.results img {
+    width: 170px;
+    height: 300px;
+    display: block;
+}
+
+.info {
+    width: 170px;
+    height: 200px;
+    display: inline-flex;
+    flex-flow: column nowrap;
+    position: absolute;
+    background-color: #fff;
+    bottom: -145px;
+    left: 0px;
+    padding: 7px;
+}
+
+#hover {
+    display: none;
+}
+
+.info:hover,
+#hover:checked~.info {
+    bottom: -25px;
+}
+
+.info .title {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.info .date {
+    margin-top: 5px;
+}
+
+.info .genre {
+    margin-top: 5px;
+}
+
+.genre span {
+    margin-top: 2px;
+    padding: 2px;
+    background-color: #1e90ff;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.inline-rating {
+    margin-top: 5px;
+    height: 30px;
+    display: inline-flex;
+    justify-content: space-evenly;
+}
+
+.home {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: 15px;
+}
+
+.content-wrap {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.detailed-info {
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width:700px) {
+    .more-info {
+        padding: 0.8rem;
+        justify-content: space-evenly;
+    }
+    .other-info {
+        padding: 4rem 0;
+        justify-content: center;
+    }
+    .info-one {
+        margin-right: 3rem;
+    }
+    .info-two {
+        margin-left: 3rem;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .more-info {
+        padding: 0.8rem 6rem;
+    }
+    .info-one {
+        margin-right: 4.5rem;
+    }
+    .info-two {
+        margin-left: 4.5rem;
+    }
+}

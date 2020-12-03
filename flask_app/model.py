@@ -9,6 +9,12 @@ association_table = db.Table('association',
                              db.Column('movie_id', db.Integer,
                                        db.ForeignKey('movie.id'))
                              )
+music_association_table = db.Table('music_association',
+                                   db.Column('users', db.Integer,
+                                             db.ForeignKey('user.id')),
+                                   db.Column('music_id', db.Integer,
+                                             db.ForeignKey('music.id'))
+                                   )
 
 
 class User(db.Model, UserMixin):
@@ -22,8 +28,14 @@ class User(db.Model, UserMixin):
     genre_b = db.Column(db.String(20), nullable=False, default='')
     genre_c = db.Column(db.String(20), nullable=False, default='')
     genre_d = db.Column(db.String(20), nullable=False, default='')
+    genre_e = db.Column(db.String(20), nullable=False, default='')
+    genre_f = db.Column(db.String(20), nullable=False, default='')
+    genre_g = db.Column(db.String(20), nullable=False, default='')
+    genre_h = db.Column(db.String(20), nullable=False, default='')
     movie = db.relationship(
         'Movie', secondary=association_table, backref="users")
+    music = db.relationship(
+        'Music', secondary=music_association_table, backref="user_ids")
 
 
 class Movie(db.Model):
@@ -45,3 +57,30 @@ class Movie(db.Model):
     keywords = db.Column(db.String(50), nullable=False)
     soup = db.Column(db.String(100), nullable=False)
     rating = db.Column(db.Integer, nullable=False, default=0)
+
+
+class Music(db.Model):
+    __tablename__ = "music"
+    id = db.Column(db.Integer, primary_key=True)
+    song_id = db.Column(db.String(30), nullable=False)
+    title = db.Column(db.String(30), nullable=False)
+    release = db.Column(db.String(30), nullable=False)
+    artist_name = db.Column(db.String(30), nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    genres = db.Column(db.String(30), nullable=False)
+    url = db.Column(db.String(30), nullable=False, default="")
+    producer = db.Column(db.String(30), nullable=False, default="")
+    label = db.Column(db.String(30), nullable=False, default="")
+    date = db.Column(db.String(30), nullable=False, default="")
+    country = db.Column(db.String(30), nullable=False, default="")
+    languages = db.Column(db.String(30), nullable=False, default="")
+    rating = db.Column(db.Integer, nullable=False, default=3)
+    vote_count = db.Column(db.Integer, nullable=False, default=1)
+
+
+class UserInfo(db.Model):
+    __tablename__ = "userinfo"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String(40), nullable=False)
+    song_id = db.Column(db.String(30), nullable=False)
+    listen_count = db.Column(db.Integer, nullable=False)

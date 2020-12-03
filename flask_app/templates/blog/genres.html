@@ -1,29 +1,57 @@
 {% extends 'base.html' %} {% block title %}
-<title>movie genres</title>{% endblock %} {% block style %}
+<title>genres</title>{% endblock %} {% block style %}
 <link rel="stylesheet" href="{{url_for('static', filename = './all-genres.css')}}">{% endblock %} {% block content%}
 <main>
+    {% if viewtype == "movie"%}
     <div class="page-title">
         <h1>List Of Movie Genres</h1>
     </div>
+
     <div class="list-genre">
-        <a href="{{url_for('blog.movie_genre', genre = 'action')}}">Action</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'adventure')}}">Adventure</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'animation')}}">Animation</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'comedy')}}">Comedy</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'crime')}}">Crime</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'documentary')}}">Documentary</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'drama')}}">Drama</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'family')}}">Family</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'fantasy')}}">Fantasy</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'history')}}">History</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'horror')}}">Horror</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'music')}}">Music</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'mystery')}}">Mystery</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'romance')}}">Romance</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'science fiction')}}">Science Fiction</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'thriller')}}">Thriller</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'war')}}">War</a>
-        <a href="{{url_for('blog.movie_genre', genre = 'western')}}">Western</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'action')}}">Action</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'adventure')}}">Adventure</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'animation')}}">Animation</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'comedy')}}">Comedy</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'crime')}}">Crime</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'documentary')}}">Documentary</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'drama')}}">Drama</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'family')}}">Family</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'fantasy')}}">Fantasy</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'history')}}">History</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'horror')}}">Horror</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'music')}}">Music</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'mystery')}}">Mystery</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'romance')}}">Romance</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'science fiction')}}">Science Fiction</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'thriller')}}">Thriller</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'war')}}">War</a>
+        <a href="{{url_for('blog.genre_movie', genre = 'western')}}">Western</a>
     </div>
+    {% endif %} {% if viewtype == "tv" %}
+    <div class="page-title">
+        <h1>List Of Tv series Genres</h1>
+    </div>
+    <div class="list-genre">
+        <a href="{{url_for('blog.genre_tv', genre = 'action')}}">Action</a>
+        <a href="{{url_for('blog.genre_tv', genre = 'horror')}}">Horror</a>
+        <a href="{{url_for('blog.genre_tv', genre = 'comedy')}}">Comedy</a>
+        <a href="{{url_for('blog.genre_tv', genre = 'romance')}}">Romance</a>
+        <a href="{{url_for('blog.genre_tv', genre = 'crime')}}">Crime</a>
+        <a href="{{url_for('blog.genre_tv', genre = 'drama')}}">Drama</a>
+    </div>
+    {% endif %} {% if viewtype == "music" %}
+    <div class="page-title">
+        <h1>List Of Music Genres</h1>
+    </div>
+    <div class="list-genre">
+        <a href="{{url_for('blog.genre_music', genre = 'afro')}}">Afro</a>
+        <a href="{{url_for('blog.genre_music', genre = 'afro-pop')}}">Afro Pop</a>
+        <a href="{{url_for('blog.genre_music', genre = 'blues')}}">Blues</a>
+        <a href="{{url_for('blog.genre_music', genre = 'gospel')}}">Gospel</a>
+        <a href="{{url_for('blog.genre_music', genre = 'rock')}}">Rock</a>
+        <a href="{{url_for('blog.genre_music', genre = 'reggae')}}">Reggae</a>
+        <a href="{{url_for('blog.genre_music', genre = 'rap')}}">Rap</a>
+    </div>
+    {% endif %}
 </main>
 {% endblock %}

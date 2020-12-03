@@ -1,0 +1,27 @@
+main {
+    width: 100%;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+main h1 {
+    color: #1e90ff;
+    align-self: center;
+}
+
+.goto {
+    margin-top: 10px;
+}
+
+.goto a {
+    text-decoration: none;
+    font-family: inherit;
+    padding: 6px 13px;
+    background-color: #d35113;
+    color: #fff;
+    border-radius: 3px;
+}

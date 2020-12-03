@@ -1,0 +1,139 @@
+{% extends 'base.html'%} {% block title%}
+<title>
+    settings
+</title>
+{% if viewname == 'update'%}
+<style>
+    .settings-links .account {
+        background-color: #1e90ff;
+    }
+
+    .settings-links .account a {
+        color: #fff;
+    }
+</style>
+{% endif %} {% if viewname == 'update_pass'%}
+<style>
+    .settings-links .password {
+        background-color: #1e90ff;
+    }
+
+    .settings-links .password a {
+        color: #fff;
+    }
+</style>
+{% endif %} {% if viewname == 'delete'%}
+<style>
+    .settings-links .delete {
+        background-color: #1e90ff;
+    }
+
+    .settings-links .delete a {
+        color: #fff;
+    }
+</style>
+{% endif %} {% endblock %} {% block style%}
+<link rel="stylesheet" href="{{url_for('static', filename='./setting.css')}}"> {% endblock%} {% block content %}
+<main>
+    <div class="select">
+        <div class="title">
+            settings
+        </div>
+        <div class="settings-links">
+            <div class="account">
+                <a href="{{url_for('auth.update')}}">
+                    account settings
+                </a>
+            </div>
+            <div class="password">
+                <a href="{{url_for('auth.update_password')}}">
+                    change password
+                </a>
+            </div>
+            <div class="delete">
+                <a href="{{url_for('auth.delete')}}">
+                    delete account
+                </a>
+            </div>
+        </div>
+    </div>
+    {% if viewname == 'update'%}
+    <div class="forms">
+        <form action="" method="POST">
+            <div class="auth-div">
+                {{form.hidden_tag()}} {{form.username.label(class= "field-label")}} {%if form.username.errors%}
+                {{form.username(class ="field error")}}
+                <div class="errors">
+                    {%for error in form.username.errors%}
+                    <span>{{error}}</span> {% endfor %}
+                </div>
+                {% else %} {{form.username(class = "field")}} {% endif %}
+            </div>
+            <div class="auth-div">
+                {{form.hidden_tag()}} {{form.email.label(class = "field-label")}} {%if form.email.errors%}
+                {{form.email(class ="field error")}}
+                <div class="errors">
+                    {%for error in form.email.errors%}
+                    <span>{{error}}</span> {% endfor %}
+                </div>
+                {% else %} {{form.email(class = "field")}} {% endif %}
+            </div>
+            <div class="submit">
+                {{form.submit(class = "btn")}}
+            </div>
+        </form>
+    </div>
+    {% endif %} {% if viewname == 'update_pass' %}
+    <div class="forms">
+        <form action="" method="POST">
+            <div class="auth-div">
+                {{form.hidden_tag()}} {{form.old_password.label(class = "field-label")}} {%if form.old_password.errors%}
+                {{form.old_password(class ="field error")}}
+                <div class="errors">
+                    {%for error in form.old_password.errors%}
+                    <span>{{error}}</span> {% endfor %}
+                </div>
+                {% else %} {{form.old_password(class = "field")}} {% endif %}
+            </div>
+
+            <div class="auth-div">
+                {{form.hidden_tag()}} {{form.password.label(class = "field-label")}} {%if form.password.errors%}
+                {{form.password(class ="field error")}}
+                <div class="errors">
+                    {%for error in form.password.errors%}
+                    <span>{{error}}</span> {% endfor %}
+                </div>
+                {% else %} {{form.password(class = "field")}} {% endif %}
+            </div>
+
+            <div class="auth-div">
+                {{form.hidden_tag()}} {{form.confirm_password.label(class = "field-label")}}
+                {%if form.confirm_password.errors%} {{form.confirm_password(class ="field error")}}
+                <div class="errors">
+                    {%for error in form.confirm_password.errors%}
+                    <span>{{error}}</span> {% endfor %}
+                </div>
+                {% else %} {{form.confirm_password(class = "field")}} {% endif %}
+            </div>
+
+            <div class="submit">
+                {{form.submit(class = "btn")}}
+            </div>
+        </form>
+    </div>
+    {% endif %} {% if viewname == 'delete' %}
+    <div class="forms">
+        <div class="div">
+            <h3>Are you sure you want to delete this account? This change cannot be undone and your account will be
+                permanently deleted
+            </h3>
+        </div>
+        <form action="" method="POST" class="form">
+            <button type="submit" class="btn submit-special">
+                Delete
+            </button>
+        </form>
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

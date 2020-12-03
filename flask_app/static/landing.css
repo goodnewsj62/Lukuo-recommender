@@ -6,12 +6,6 @@ main {
     margin-bottom: 6rem;
 }
 
-#mov,
-#mus,
-#tv {
-    display: none;
-}
-
 .select {
     width: 80%;
     display: flex;
@@ -19,7 +13,8 @@ main {
     background-color: #fff;
     /* padding: 10px; */
     position: relative;
-    margin: 15px 0px;
+    margin-top: 3rem;
+    margin-bottom: 15px;
 }
 
 .select-wrap {
@@ -50,13 +45,22 @@ main {
     transition: all 0.5s;
 }
 
-#mov:checked~.select .bar {
+
+/* #mov:checked~.select .bar {
     bottom: 0;
     left: 0;
 }
 
 #mov:checked~.movie-div {
     display: flex;
+}
+
+#mov:checked~.music-div {
+    display: none;
+}
+
+#mov:checked~.tv-div {
+    display: none;
 }
 
 #mus:checked~.select .bar {
@@ -67,6 +71,14 @@ main {
     display: flex;
 }
 
+input[type="radio"][id="mus"]~.tv-div {
+    display: none;
+}
+
+#mus:checked~.movie-div {
+    display: none;
+}
+
 #tv:checked~.tv-div {
     display: flex;
 }
@@ -75,8 +87,18 @@ main {
     left: 66.6%;
 }
 
-.movie-div {
+input[type="radio"][id="tv"]~.music-div {
     display: none;
+}
+
+#tv:checked~.movie-div {
+    display: none;
+} */
+
+.movie-div,
+.music-div,
+.tv-div {
+    display: flex;
     width: 95%;
     flex-flow: column nowrap;
 }
@@ -135,6 +157,7 @@ main {
     width: 100%;
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
 }
 
 .cover-link {
@@ -149,10 +172,20 @@ main {
 
 .inline-link:hover {
     text-decoration: underline;
+    color: #fff;
+}
+
+.title-link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.title-link:hover {
+    color: #1e90ff;
 }
 
 .results:hover {
-    box-shadow: 1px 3px 4px #808080;
+    box-shadow: 4px 5px 5px #808080;
 }
 
 .results {
@@ -164,16 +197,17 @@ main {
     overflow: hidden;
     margin-top: 12px;
     border-radius: 3px;
+    box-shadow: 1px 3px 4px #808080;
 }
 
 .results img {
-    width: 145px;
+    width: 170px;
     height: 300px;
     display: block;
 }
 
 .info {
-    width: 145px;
+    width: 170px;
     height: 200px;
     display: inline-flex;
     flex-flow: column nowrap;
@@ -205,6 +239,7 @@ main {
 
 .info .genre {
     margin-top: 5px;
+    width: 85%;
 }
 
 .genre span {
@@ -217,6 +252,7 @@ main {
 
 .rating {
     margin-top: 5px;
+    width: 85%;
     display: inline-flex;
     justify-content: space-evenly;
 }
@@ -225,14 +261,14 @@ main {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 
 .content {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
-    margin-top: 15px;
+    margin-top: 2rem;
 }
 
 .content-title a {

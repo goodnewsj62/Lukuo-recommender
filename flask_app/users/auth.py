@@ -4,7 +4,7 @@ from functools import wraps
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_app.model import User
 from flask_app import db
-from .form import LoginForm, RegisterForm
+from .form import LoginForm, RegisterForm, ChangePassword, ChangeUserInfo
 
 auth = Blueprint('auth', __name__)
 
@@ -78,3 +78,64 @@ def logout():
     logout_user()
     flash('you have logged out successfully')
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/user/settings/update_password', methods=['GET', 'POST'])
+@login_required
+def update_password():
+    form = ChangePassword()
+    user = User.query.filter_by(username=current_user.username).first()
+
+    if form.validate_on_submit():
+        old_password = bcrypt_.check_password_hash(
+            user.password, form.old_password.data)
+        if old_password:
+            new_password = bcrypt_.generate_password_hash(
+                form.password.data).decode('utf-8')
+
+            user.password = new_password
+            db.session.add(user)
+            db.session.commit()
+
+            flash('you have succesfully updated your password')
+
+            return redirect(url_for('blog.recommend_home'))
+
+        flash('invalid old password')
+
+    return render_template('auth/setting.html', form=form, viewname='update_pass')
+
+
+@auth.route('/user/settings/update', methods=['GET', 'POST'])
+@login_required
+def update():
+    form = ChangeUserInfo()
+
+    user = User.query.filter_by(username=current_user.username).first()
+
+    if form.validate_on_submit():
+
+        user.username = form.username.data
+        user.email = form.email.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash('you have succesfully updated your profile')
+
+        return redirect(url_for('blog.recommend_home'))
+
+    form.username.data = user.username
+    form.email.data = user.email
+
+    return render_template('auth/setting.html', form=form, viewname='update')
+
+
+@auth.route('/user/settings/delete', methods=['GET', 'POST'])
+def delete():
+    user = User.query.filter_by(username=current_user.username).first()
+
+    if request.method == 'Post':
+        db.session.delete(user)
+        db.session.commit()
+    return render_template('auth/setting.html', viewname='delete')

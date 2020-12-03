@@ -1,60 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block title %}
-    <title>Lukuo recommender</title>{% endblock %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block title %}
+        <title>Lukuo recommender</title>{% endblock %}
 
 
 
-    <!-- link to fontawesome website -->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+        <!-- link to fontawesome website -->
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+            integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+            crossorigin="anonymous" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Itim&family=Roboto:wght@700&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Itim&family=Roboto:wght@700&display=swap"
+            rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+        <!-- roboto google fonts  -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{url_for('static', filename = './fontawesome-free-5.14.0-web/css/all.css')}}">
+        <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}"> {% block style%}{% endblock %} {%block script%}{% endblock %}
-</head>
+        <link rel="stylesheet" href="{{url_for('static', filename = './fontawesome-free-5.14.0-web/css/all.css')}}">
 
-<body>
-    <div class="container">
-        <input type="checkbox" id="check">
-        <input type="checkbox" id="user">
-        <header>
-            <div class="head">
-                <h2>Lukuo</h2>
-            </div>
-            <label for="check" class="check-label">
-                    <i class="fa fa-bars"></i>
-                    <i class="fas fa-angle-down"></i>
-                    <i class="fas fa-angle-up"></i>
-                </label>
-            <div class="auth">
-                {% if not current_user.is_authenticated %}
-                <span><a href="{{url_for('auth.login')}}">Login</a></span> {% endif %} {% if current_user.is_authenticated%}
-                <label for="user" class="user-label">
-                        <i class="fas fa-user"></i>
+        <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}"> {% block style%}{% endblock %}
+        {%block script%}{% endblock %}
+    </head>
+
+    <body>
+        <div class="container">
+            <input type="checkbox" id="check">
+            <input type="checkbox" id="user">
+            <header>
+                <div class="head">
+                    <h2>Lukuo</h2>
+                </div>
+                <label for="check" class="check-label">
+                    <span>
+                        <i class="fa fa-bars"></i>
                         <i class="fas fa-angle-down"></i>
                         <i class="fas fa-angle-up"></i>
+                    </span>
+                </label>
+                <div class="auth">
+                    {% if not current_user.is_authenticated %}
+                    <span><a href="{{url_for('auth.login')}}">Login</a></span> {% endif %}
+                    {% if current_user.is_authenticated%}
+                    <label for="user" class="user-label">
+                        <span>
+                            <i class="fas fa-user"></i>
+                            <i class="fas fa-angle-down"></i>
+                            <i class="fas fa-angle-up"></i>
+                        </span>
                     </label>
-                <nav class="user">
-                    <ul>
-                        <li>{{current_user.email}}</li>
-                        <a href="#">Settings</a>
-                        <a href="{{url_for('auth.logout')}}">LogOut</a>
-                    </ul>
-                </nav>
-                {% endif %}
-            </div>
+                    <nav class="user">
+                        <ul>
+                            <li>{{current_user.email}}</li>
+                            <a href="{{url_for('auth.update')}}">Settings</a>
+                            <a href="{{url_for('auth.logout')}}">LogOut</a>
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
 
-        </header>
-        <nav class="navbar">
-            <ul>
-                <span class="span">
+            </header>
+            <nav class="navbar">
+                <ul>
+                    <span class="span">
                         <h3 class="q-links">
                             Links
                         </h3>
@@ -64,8 +78,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url_for('blog.top')}}">
-                                Top Rated
+                            <a href="{{ url_for('blog.top_movie')}}">
+                                Top Rated Movies
                             </a>
                         </li>
                         {% if current_user.is_authenticated %}
@@ -75,23 +89,23 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{url_for('blog.recommended')}}">
-                                Recommended for you
+                            <a href="{{url_for('blog.recommended_movie')}}">
+                                Movies recommended for you
                             </a>
                         </li>
                         {% endif %}
                         <li>
-                            <a href="{{url_for('blog.recent')}}">
-                                Recently Added
+                            <a href="{{url_for('blog.recent_movie')}}">
+                                Recently Added Movies
                             </a>
                         </li>
                         <li>
-                            <a href="{{url_for('blog.movie_genres')}}">
-                                List Of Genres
+                            <a href="{{url_for('blog.genres_movie')}}">
+                                List Of Movie Genres
                             </a>
                         </li>
                     </span> {% if current_user.is_authenticated %}
-                <span class="span">
+                    <span class="span">
                         <h3 class="activity">
                             Activity
                         </h3>
@@ -101,89 +115,98 @@
                             </a>
                         </li>
                     </span> {% endif %}
-                <input type="checkbox" id="music">
-                <input type="checkbox" id="movie">
-                <input type="checkbox" id="show">
-                <div class="genres">
-                    <h3>Genres</h3>
-                    <label for="movie" class="movie-label">
+                    <input type="checkbox" id="music">
+                    <input type="checkbox" id="movie">
+                    <input type="checkbox" id="show">
+                    <div class="genres">
+                        <h3>Genres</h3>
+                        <label for="movie" class="movie-label">
                             <span>Movie</span>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </label>
-                    <ul class="movie">
-                        <li><a href="{{url_for('blog.movie_genre',genre = 'action')}}">Action</a></li>
-                        <li><a href="{{url_for('blog.movie_genre',genre = 'animation')}}">Animation</a></li>
-                        <li><a href="{{url_for('blog.movie_genre',genre = 'comedy')}}">Comedy</a></li>
-                        <li><a href="{{url_for('blog.movie_genres')}}">More Genres</a></li>
-                    </ul>
-                    <label for="music" class="music-label">
+                        <ul class="movie">
+                            <li><a href="{{url_for('blog.genre_movie',genre = 'action')}}">Action</a></li>
+                            <li><a href="{{url_for('blog.genre_movie',genre = 'animation')}}">Animation</a></li>
+                            <li><a href="{{url_for('blog.genre_movie',genre = 'comedy')}}">Comedy</a></li>
+                            <li><a href="{{url_for('blog.genres_movie')}}">More Genres</a></li>
+                        </ul>
+                        <label for="music" class="music-label">
                             <span>Music</span>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </label>
-                    <ul class="music">
-                        <li><a href="#">Afro Pop</a></li>
-                        <li><a href="#">Hip hop</a></li>
-                        <li><a href="#">Reggae</a></li>
-                        <li><a href="#">Jazz</a></li>
-                        <li><a href="#">More Genres</a></li>
-                    </ul>
-                    <label for="show" class="show-label">
+                        <ul class="music">
+                            <li><a href="{{url_for('blog.genre_music', genre = 'afro-pop')}}">Afro Pop</a></li>
+                            <li><a href="{{url_for('blog.genre_music', genre = 'afro')}}">Afro</a></li>
+                            <li><a href="{{url_for('blog.genre_music', genre = 'gospel')}}">Gospel</a></li>
+                            <li><a href="{{url_for('blog.genre_music', genre = 'reggae')}}">Reggae</a></li>
+                            <li><a href="{{url_for('blog.genres_music')}}">More Genres</a></li>
+                        </ul>
+                        <label for="show" class="show-label">
                             <span>Tv Series</span>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </label>
-                    <ul class="show">
-                        <li><a href="#">Comedy</a></li>
-                        <li><a href="#">Romance</a></li>
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">More Genres</a></li>
-                    </ul>
-                </div>
-            </ul>
-        </nav>
-        <div class="message">
-            {% with messages = get_flashed_messages()%} {% if messages%} {% for message in messages %}
-            <p>{{message}}</p>
-            {% endfor %} {% endif %} {% endwith %}
-        </div>
+                        <ul class="show">
+                            <li><a href="{{url_for('blog.genre_tv', genre = 'comedy')}}">Comedy</a></li>
+                            <li><a href="{{url_for('blog.genre_tv', genre = 'romance')}}">Romance</a></li>
+                            <li><a href="{{url_for('blog.genre_tv', genre = 'drama')}}">Drama</a></li>
+                            <li><a href="{{url_for('blog.genres_tv')}}">More Genres</a></li>
+                    </div>
 
-        <div class="wrapper">
-            {% block content%} {% endblock %}
-        </div>
-        <footer>
-            <nav class="nav-one">
-                <h3> Learn more</h3>
-                <a href="#">
+                </ul>
+
+                </ul>
+            </nav>
+
+
+            {% with messages = get_flashed_messages() %} {% if messages%}
+            <div class="message">
+                {% for message in messages %}
+                <p>{{message}}</p>
+                {% endfor %}
+            </div>
+            {% endif %} {% endwith %}
+
+
+
+
+            <div class="wrapper">
+                {% block content%} {% endblock %}
+            </div>
+            <footer>
+                <nav class="nav-one">
+                    <h3> Learn more</h3>
+                    <a href="#">
                         About Lukuo
                     </a>
-                <a href="#">
+                    <a href="#">
                         Contact Us
                     </a>
-                <a href="#">
+                    <a href="#">
                         Privacy Policy
                     </a>
-            </nav>
-            {% if current_user.is_authenticated %}
-            <nav class="nav-two">
-                <h3>Your Account</h3>
-                <a href="#">Settings</a>
-                <a href="#">Your Ratings</a>
-            </nav>
-            {% endif %}
+                </nav>
+                {% if current_user.is_authenticated %}
+                <nav class="nav-two">
+                    <h3>Your Account</h3>
+                    <a href="#">Settings</a>
+                    <a href="#">Your Ratings</a>
+                </nav>
+                {% endif %}
 
-            <nav class="nav-three">
-                <h3>Help Lukuo</h3>
-                <a href="#">
+                <nav class="nav-three">
+                    <h3>Help Lukuo</h3>
+                    <a href="#">
                         Add a title
                     </a>
-                <a href="#">
+                    <a href="#">
                         Give feedback
                     </a>
-            </nav>
-        </footer>
-    </div>
-</body>
+                </nav>
+            </footer>
+        </div>
+    </body>
 
 </html>

@@ -1,4 +1,11 @@
 fontawesome-free-5.14.0-web
 .idea
-venv
+/venv
+/venv/*
 tmdb_5000_credits.csv
+/millions_set/*
+/csv/*
+tmdb_5000_credits.csv
+tmdb_5000_movies.csv
+tmdb.csv
+newtmdb.csv
