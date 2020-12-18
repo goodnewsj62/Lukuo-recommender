@@ -1,19 +1,27 @@
 import pandas as pd
 from flask_app.model import Movie, Music, UserInfo
 from flask_app import db, create_app
-
+from flask_app.model import Music
 
 app = create_app()
 
 
 def save_operation(name):
     with app.app_context():
+
         db.session.add(name)
         db.session.commit()
 
 
+def last_stop():
+    with app.app_context():
+        test = Music.query.all()
+
+        print('---------',test, test[-1].title)
+
+
 def to_db_movies():
-    df = pd.read_csv('./newtmdb.csv')
+    df = pd.read_csv('./csv/newtmdb.csv')
     length = len(df)
     for i in range(length):
         print(i)
@@ -29,7 +37,7 @@ def to_db_music():
     df = pd.read_csv('./millions_set/newsong_data.csv')
     df = df.loc[:20000]
     length = len(df)
-    # i = 9237
+    i = 8386
     for i in range(length):
         # while i < len(df):
         print(i)
@@ -54,4 +62,5 @@ def to_db_info():
 
 # to_db_movies()
 # to_db_music()
-to_db_info()
+# to_db_info()
+last_stop()

@@ -3,22 +3,25 @@
 {% endblock %} {% block style%}
 <link rel="stylesheet" href="{{url_for('static', filename = 'music_details.css')}}"> {% endblock%} {% block content %}
 <main>
+    <div id="username" style="display: none;">
+        {{current_user.username}}
+    </div>
     <section class="title-info">
         <picture>
-            <source media="(min-width:1000px)"
-                srcset="{{url_for('static', filename ='./images/large/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
-            <source media="(min-width: 600px)"
-                srcset="{{url_for('static', filename ='./images/medium/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
-            <source media="(min-width: 370px)"
-                srcset="{{url_for('static', filename ='./images/medium/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
+            <source media="(min-width:1000px)" srcset="{{url_for('static', filename ='./images/large/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
+            <source media="(min-width: 600px)" srcset="{{url_for('static', filename ='./images/medium/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
+            <source media="(min-width: 370px)" srcset="{{url_for('static', filename ='./images/medium/WIZKID-COVER-web-1-788x1114-1.jpg')}}">
             <img src="{{url_for('static', filename ='./images/WIZKID-COVER-web-1-788x1114-1.jpg')}}" alt="poster">
         </picture>
         <div class="music-info">
+            <div style="display: none;" id="main-title">
+                {{music.song_id}}
+            </div>
             <h2 class="title">{{music.title}}</h2>
             <div class="rating">
                 {%set rank = 5 - music.rating%} {%for n in range(music.rating)%}
-                <i style="color:coral;" class="fas fa-star star"> </i> {% endfor %} {%if rank%} {%for n in range(rank)%}
-                <i style="color:#1e90ff;" class="fas fa-star star"> </i> {% endfor %} {%endif%}
+                <i class="fas fa-star star"> </i> {% endfor %} {%if rank%} {%for n in range(rank)%}
+                <i class="fas fa-star"> </i> {% endfor %} {%endif%}
             </div>
             <div class="more-info">
                 <p class="artist">
@@ -90,12 +93,13 @@
             {% for result in result%}
             <a href="{{url_for('blog.details'+'_'+ viewtype ,id = result.id)}}" class="cover-link">
                 <div class="results">
-                    <img src="{{url_for('static', filename ='./images/WIZKID-COVER-web-1-788x1114-1.jpg')}}"
-                        alt="poster">
+                    <img src="{{url_for('static', filename ='./images/WIZKID-COVER-web-1-788x1114-1.jpg')}}" alt="poster">
 
                     <div class="info">
-                        <div class="title"><a style="font-family: inherit;" class="inline-link"
-                                href="{{url_for('blog.details'+'_'+viewtype, id = result.id)}}">{{result.title}}</a>
+                        <div style="display: none;" class="js-grab">
+                            {{result.song_id}}
+                        </div>
+                        <div class="title"><a style="font-family: inherit;" class="inline-link" href="{{url_for('blog.details'+'_'+viewtype, id = result.id)}}">{{result.title}}</a>
                         </div>
                         <div class="artist">
                             {{result.artist_name}}
@@ -104,16 +108,14 @@
                             {%if result.year == 0%} null {%else%} {{result.year}}{%endif%}
                         </div>
                         <div class="genre">
-                            <a class="inline-link"
-                                href="{{url_for(('blog.genre'+'_'+viewtype), genre = result.genres)}}">
+                            <a class="inline-link" href="{{url_for(('blog.genre'+'_'+viewtype), genre = result.genres)}}">
                                 <span>
                                     {{result.genres}} </span></a>
                         </div>
-                        <div class="inline-rating">
+                        <div class="inline-rating js-rating">
                             {%set rank = 5 - result.rating%} {%for n in range(result.rating)%}
-                            <i style="color:coral;" class="fas fa-star star"> </i> {% endfor %} {%if rank%}
-                            {%for n in range(rank)%}
-                            <i style="color:#1e90ff;" class="fas fa-star star"> </i> {% endfor %} {%endif%}
+                            <i class="fas fa-star star"> </i> {% endfor %} {%if rank%} {%for n in range(rank)%}
+                            <i class="fas fa-star "> </i> {% endfor %} {%endif%}
                         </div>
                     </div>
                 </div>
@@ -122,4 +124,7 @@
         </div>
     </section>
 </main>
-{% endblock %}
+{% endblock %} {% block script%} {% if current_user.is_authenticated%}
+<script src="{{url_for('static', filename = './js/rate.js')}}"></script>
+{%endif%}
+<script src="{{url_for('static', filename = './js/adjust.js')}}"></script> {% endblock %}

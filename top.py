@@ -13,7 +13,7 @@ def dataframe_tv(tv_data):
 def top_engine(tv_data=None):
     metadata = []
     if not tv_data:
-        metadata = pd.read_csv('./tmdb_5000_movies.csv', low_memory=False)
+        metadata = pd.read_csv('./csv/tmdb_5000_movies.csv', low_memory=False)
     else:
         metadata = dataframe_tv(tv_data)
 

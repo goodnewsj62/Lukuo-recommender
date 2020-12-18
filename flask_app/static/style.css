@@ -48,9 +48,17 @@
         align-items: center;
     }
     
+    #logo {
+        width: 24px;
+        height: 28px;
+        transform: translateY(-4px);
+    }
+    
     .head h2 {
         font-family: "Roboto", sans-serif;
+        font-size: 1.8rem;
         color: #d35113;
+        padding: 2px;
     }
     
     .check-label,
@@ -73,6 +81,10 @@
         justify-content: center;
         position: relative;
         border-radius: 3px;
+    }
+    
+    .check-label {
+        transform: translateY(-2px);
     }
     
     .auth {
@@ -123,6 +135,7 @@
         text-decoration: none;
         font-size: bold;
         color: #1e90ff;
+        padding-bottom: 5px;
     }
     
     .auth a:hover,
@@ -390,19 +403,38 @@
         color: #d35113;
     }
     
+    .star {
+        color: coral;
+    }
+    
+    .fa-star:hover,
+    .fa-star:active {
+        color: #1e90ff;
+    }
+    
+    @media screen and (max-width:450px) {
+        .navbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .navbar::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    
     @media screen and (min-width: 700px) {
         header {
             padding: 1rem 2rem;
         }
-        .check-label {
-            width: 80px;
-            margin-left: 1rem;
+        .head {
+            transform: translateY(1px);
+        }
+        .check-label,
+        .user-label {
+            width: 50px;
         }
         .user {
             width: 20%;
-        }
-        .user-label {
-            width: 80px;
         }
         .navbar {
             max-height: 40vh;
@@ -420,6 +452,10 @@
         }
         .navbar div {
             padding: 0px;
+        }
+        .copy-right {
+            grid-column: 1/5;
+            grid-row: 2/3;
         }
         .genres {
             margin-left: 10px;
@@ -442,7 +478,7 @@
             margin-top: 8vh;
         }
         .check-label {
-            width: 90px;
+            width: 60px;
             margin-left: 0.2rem;
         }
         .check-label:active,
@@ -460,7 +496,7 @@
         }
         footer {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             grid-gap: 1rem;
             gap: 1rem;
             grid-auto-rows: minmax(100px, auto);

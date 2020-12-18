@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lukuo intro home</title>
 
+    <link rel="shortcut icon" href="{{url_for('static',filename='/images/logo/favicon.ico')}}" type="image/x-icon">
+
     <!-- link to fontawesome website -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
@@ -40,36 +42,36 @@
                 <h3>Recommendations</h3>
                 <p>Lukuo helps to recommend movies and audio ranging from different African nations</p>
                 <picture>
-                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/test/main-screen.jpg')}}">
-                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/test/medium/main-screen.jpg')}}">
-                    <img src="{{url_for('static', filename = './images/test/little/main-screen.jpg')}}" alt="image-description">
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/start/little/lukuo-one.png')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/start/medium/lukuo-one.png')}}">
+                    <img src="{{url_for('static', filename = './images/start/little/lukuo-one.PNG')}}" alt="image-description">
                 </picture>
             </section>
             <section class="section-two">
                 <h3>Search media</h3>
-                <p>Lukuo allows you to search for media and then recommends other related media for you</p>
+                <p>Lukuo allows you to search for media and then recommends other media related to that which you have searched</p>
                 <picture>
-                    <source media="(min-width:1000px)" srcset="">
-                    <source media="(min-width: 700px)" srcset="">
-                    <img src="{{url_for('static', filename = './images/test/lukuo.png')}}" alt="image-description">
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/start/little/lukuo-three.png')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/start/medium/lukuo-three.png')}}">
+                    <img src="{{url_for('static', filename = './images/start/little/lukuo-three.PNG')}}" alt="image-description">
                 </picture>
             </section>
             <section class="section-three">
                 <h3>Top rated</h3>
-                <p>We provide top rated Media</p>
+                <p>We provide top rated media which other users have liked or rated high</p>
                 <picture>
-                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/test/movie-details-similar.jpg')}}">
-                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/test/meduim/movie-details-similar.jpg')}}">
-                    <img src="{{url_for('static', filename = './images/test/little/movie-details-similar.jpg')}}" alt="image-description">
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/start/little/lukuo-five.PNG')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/start/medium/lukuo-five.PNG')}}">
+                    <img src="{{url_for('static', filename = './images/start/little/lukuo-five.PNG')}}" alt="image-description">
                 </picture>
             </section>
             <section class="section-four">
                 <h3>Media Information</h3>
-                <p>Lukuo provides top-rated media</p>
+                <p>Lukuo provides top-notch media recommendations for you based on your preferences</p>
                 <picture>
-                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/test/movie-details-fullpage.jpg')}}">
-                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/test/medium/movie-details-fullpage.jpg')}}">
-                    <img src="{{url_for('static', filename = './images/test/little/movie-details-fullpage.jpg')}}" alt="image-description">
+                    <source media="(min-width:1000px)" srcset="{{url_for('static', filename = './images/start/little/lukuo-two.png')}}">
+                    <source media="(min-width: 700px)" srcset="{{url_for('static', filename = './images/start/medium/lukuo-two.png')}}">
+                    <img src="{{url_for('static', filename = './images/start/little/lukuo-two.PNG')}}" alt="image-description">
                 </picture>
             </section>
             <div class="continue">
@@ -83,9 +85,9 @@
         </main>
         <footer>
             <div class="footer-wrapper">
-                <a href="#">About|</a>
+                <a href="{{ url_for('site.about')}}">About|</a>
                 <a href="#">Contact|</a>
-                <a href="#">Policy|</a>
+                <a href="{{ url_for('site.policy')}}">Policy|</a>
             </div>
         </footer>
     </div>

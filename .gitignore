@@ -3,7 +3,8 @@ fontawesome-free-5.14.0-web
 /venv
 /venv/*
 tmdb_5000_credits.csv
-/millions_set/*
+/millions_set/* 
+/millions_set
 /csv/*
 tmdb_5000_credits.csv
 tmdb_5000_movies.csv
@@ -11,5 +12,7 @@ tmdb.csv
 newtmdb.csv
 */__pycache__
 */__pycache__/*
-/migrations
-/migrations/*
+__pycache__/*
+__pycache__
+/geo_lib
+geo_lib/*

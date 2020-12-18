@@ -1,17 +1,32 @@
-from flask import Blueprint, request, redirect, render_template, g, abort, url_for
+import os
+from flask import Blueprint, request, redirect, render_template, g, abort, url_for, session
 from flask_login import current_user, login_required
 from functools import wraps
 from recommender import Recommender
 from top import recommend_top, top_engine, get_popular_music
 from .form import Search
 import random
-from flask_app.model import Movie, Music
+from flask_app import db
+from flask_app.model import Movie, Music, User
 from config.configuration import Config
 from flask_sqlalchemy import Pagination
 import difflib
 
 
 blog = Blueprint('blog', __name__)
+
+
+@blog.before_app_request
+def get_language():
+    ip = None
+    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+        ip = request.environ['REMOTE_ADDR']
+    else:
+        ip = request.environ['HTTP_X_FORWARDED_FOR']
+        ip = ip.split(',')
+        ip = ip[0]
+
+    session['ip'] = ip
 
 
 def anonymous(func):
@@ -212,7 +227,6 @@ def genre_movie(genre):
 @blog.route('/movie/genres', methods=['GET'])
 def genres_movie():
     return render_template('blog/genres.html', viewtype='movie')
-
 
 # --------------------------music-----------------------
 
@@ -652,3 +666,135 @@ def genre_tv(genre):
 @blog.route('/tv/genres', methods=['GET'])
 def genres_tv():
     return render_template('blog/genres.html', viewtype='tv')
+
+
+# ----------------------------overall-------------------------
+
+@blog.route('/rating', methods=['GET', 'POST'])
+def rate_movie():
+
+    if request.method == 'POST':
+
+        # remove \n\r and  ' ' if exists
+        title = request.form['title'].split()
+        if len(title) == 1:
+            title = title[0]
+        else:
+            title = request.form['title']
+        username = request.form['username'].split()
+
+        user = User.query.filter_by(username=username[0]).first()
+        movie = Movie.query.filter_by(title=title).first()
+        music = Music.query.filter_by(song_id=title).first()
+
+        if music == [] or music == None:
+            rating_ = movie.rating
+            movie.users.append(user)
+
+            movie.rating = (int(request.form['level']) + rating_)
+            user.movie.append(movie)
+
+            db.session.add(movie)
+            db.session.add(user)
+            db.session.commit()
+        else:
+            rating_ = music.vote_count
+
+            music.user_ids.append(user)
+
+            music.vote_count = (int(request.form['level']) + rating_)
+            user.music.append(music)
+
+            db.session.add(music)
+            db.session.add(user)
+            db.session.commit()
+
+    return 'Done'
+
+
+@blog.route('/movie/ratings', methods=['GET'])
+def ratings():
+    user = []
+
+    page = request.args.get('page', 1, type=int)
+
+    user = User.query.filter_by(username=current_user.username).first()
+    user = user.movie
+
+    no_of_movies = len(user)
+    item = (page - 1)*(Config.ITEMS_PER_PAGE)
+    end_index = item + (Config.ITEMS_PER_PAGE)
+
+    # for page 1 [0:20] page2[20:41]
+    item = user[item:end_index]
+
+    movie = Pagination(Movie.query.all(), page,
+                       Config.ITEMS_PER_PAGE, len(user), item)
+
+    prev_url = url_for('blog.genre_tv',
+                       page=movie.prev_num) if movie.has_prev else None
+
+    next_url = url_for('blog.genre_tv',
+                       page=movie.next_num) if movie.has_next else None
+
+    return render_template('blog/ratings.html', movie=movie.items, prev_url=prev_url,
+                           next_url=next_url, no=no_of_movies, viewtype="movie")
+
+
+@blog.route('/music/ratings', methods=['GET'])
+def music_ratings():
+    user = []
+
+    page = request.args.get('page', 1, type=int)
+
+    user = User.query.filter_by(username=current_user.username).first()
+    user = user.music
+
+    no_of_music = len(user)
+    item = (page - 1)*(Config.ITEMS_PER_PAGE)
+    end_index = item + (Config.ITEMS_PER_PAGE)
+
+    # for page 1 [0:20] page2[20:41]
+    item = user[item:end_index]
+
+    music = Pagination(Music.query.all(), page,
+                       Config.ITEMS_PER_PAGE, len(user), item)
+
+    prev_url = url_for('blog.genre_tv',
+                       page=music.prev_num) if music.has_prev else None
+
+    next_url = url_for('blog.genre_tv',
+                       page=music.next_num) if music.has_next else None
+
+    return render_template('blog/ratings.html', music=music.items, prev_url=prev_url,
+                           next_url=next_url, no=no_of_music, viewtype='music')
+
+
+@blog.route('/tv/ratings', methods=['GET'])
+def tv_ratings():
+    user = []
+
+    page = request.args.get('page', 1, type=int)
+
+    user = User.query.filter_by(username=current_user.username).first()
+    user = user.movie
+    user = [each for each in user if "tvmovie" in each.genres]
+
+    no_of_movies = len(user)
+    item = (page - 1)*(Config.ITEMS_PER_PAGE)
+    end_index = item + (Config.ITEMS_PER_PAGE)
+
+    # for page 1 [0:20] page2[20:41]
+    item = user[item:end_index]
+
+    movie = Pagination(Movie.query.all(), page,
+                       Config.ITEMS_PER_PAGE, len(user), item)
+
+    prev_url = url_for('blog.genre_tv',
+                       page=movie.prev_num) if movie.has_prev else None
+
+    next_url = url_for('blog.genre_tv',
+                       page=movie.next_num) if movie.has_next else None
+
+    return render_template('blog/ratings.html', movie=movie.items, prev_url=prev_url,
+                           next_url=next_url, no=no_of_movies, viewtype="tv")

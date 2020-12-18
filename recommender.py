@@ -80,7 +80,7 @@ class Recommender:
         df1 = None
         df2 = None
         if self.type == 'movie':
-            df1 = pd.read_csv('./tmdb.csv')
+            df1 = pd.read_csv('./csv/tmdb.csv')
             df2 = df1['soup']
         elif self.type == 'music':
             df1 = pd.read_csv('./millions_set/newsong_data.csv')

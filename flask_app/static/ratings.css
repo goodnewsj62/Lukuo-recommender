@@ -1,0 +1,35 @@
+.query {
+    margin-top: 5vh;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.query a {
+    margin-left: 10px;
+    text-decoration: none;
+    padding: 6px 20px;
+    border: 1px solid rgba(128, 128, 128, 0.6);
+    border-radius: 4px;
+    background-color: #fff;
+    color: #d35113;
+}
+
+.query a:hover {
+    background-color: #4ca2f8;
+    color: #fff;
+}
+
+.rate-head {
+    font-size: 2rem;
+    font-weight: 200;
+    display: flex;
+    align-self: center;
+    text-align: center;
+}
+
+.count-info {
+    padding: 10px;
+    margin-left: 4rem;
+    font-weight: bold;
+}

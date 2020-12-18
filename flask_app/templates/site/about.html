@@ -1,0 +1,22 @@
+{% extends 'base.html'%} {% block title%}
+<title>
+    Lukuo about
+</title>
+{% endblock %} {%block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'about.css')}}"> {% endblock %} {% block content%}
+<main>
+    <section>
+        <div class="about">
+            <h1>About Lukuo</h1>
+            <p><br>Lukuo is an African media recommender that helps you predict media (movies, music, tv-series) you are likely to enjoy and help you avoid those you won't, using a filtering engine together with data provided. Lukuo is free and only seeks
+                to improve user's media choice. The usage of this website is guarded by these <a href="{{url_for('site.policy')}}">terms</a>. </p>
+        </div>
+        <div class="about">
+            <h2>The Company</h2>
+            <p>
+                <br>Lukuo is operated by<strong> UOBIS</strong>. We are registered in Nigeria and have our registered office at Wuse Zone 6, Abuja. Privacy Policy and Services Level Agreement("Terms") govern your use of our website and services we provide.
+            </p>
+        </div>
+    </section>
+</main>
+{% endblock %}

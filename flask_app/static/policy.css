@@ -1,0 +1,41 @@
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    min-height: 90vh;
+    width: 90%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    background-color: #fff;
+    padding: 2.5rem 1rem;
+    align-self: center;
+    margin: 2.5rem 0rem;
+}
+
+section ul {
+    padding: 1rem;
+}
+
+section ul li {
+    list-style: square;
+}
+
+section p {
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (min-width: 700px) {
+    section {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    section {
+        width: 50%;
+    }
+}

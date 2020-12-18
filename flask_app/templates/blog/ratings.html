@@ -1,0 +1,157 @@
+{% extends 'base.html'%} {% block title%}
+<title>Ratings</title>
+{% endblock %} {%block style%}
+<link rel="stylesheet" href="{{ url_for('static', filename= './landing.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename= './ratings.css')}}"> {% if viewtype == 'movie'%}
+<style>
+    .select .bar {
+        bottom: 0;
+        left: 0;
+    }
+</style>
+{% endif %} {%if viewtype == 'music' %}
+<style>
+    .select .bar {
+        left: 33.3%;
+    }
+</style>
+{%endif%} {%if viewtype == 'tv' %}
+<style>
+    .select .bar {
+        left: 66.6%;
+    }
+</style>
+{% endif %} {% endblock %} {% block content%}
+<main>
+    <div id="username" style="display: none;">
+        {{current_user.username}}
+    </div>
+    <div class="select">
+        <div class="select-wrap">
+            <div class="mov">
+                <a style="font: inherit;color:inherit;text-decoration:none;" href="{{url_for('blog.ratings')}}">
+                    movie
+                </a>
+            </div>
+            <div class="mus">
+                <a style="font: inherit;color:inherit;text-decoration:none;" href="{{url_for('blog.music_ratings')}}">
+                    music
+                </a>
+            </div>
+            <div class="tv">
+                <a style="font: inherit;color:inherit;text-decoration:none;" href="{{url_for('blog.tv_ratings')}}">
+                    tv-series
+                </a>
+            </div>
+        </div>
+        <div class="bar">
+        </div>
+    </div>
+    <section class="searched">
+        <div class="rate-head">
+            Your Ratings
+        </div>
+        <div class="count-info">
+            {% if viewtype == 'movie' or viewtype == 'tv'%} {%if movie == [] %} {% if viewtype == 'movie'%}
+            <span>Opps! You Havent Rated Any Movie Yet</span> {% else %}
+            <span>Opps! You Havent Rated Any Tv-series Yet</span> {% endif %} {% else %} {% if viewtype == 'movie'%}
+            <p> You Rated {{no}} Movies</p>
+            {% else %}
+            <p> You Rated {{no}} Tv-series</p>
+            {% endif %} {%endif%} {%else%} {%if music == []%}
+            <span>Opps! You Havent Rated Any Music Yet</span> {% else %}
+            <p> You Rated {{no}} Musics</p>
+            {% endif %} {% endif %}
+        </div>
+        {% if movie and viewtype == "movie" or viewtype == "tv"%}
+        <div class="result">
+            {% for result in movie %}
+            <a href="{{url_for(('blog.details'+'_'+viewtype),id = result.id)}}" class="cover-link">
+                <div class="results">
+                    <input type="checkbox" id="hover">
+                    <img src="{{url_for('static', filename ='./images/movie-poster-template-design-21a1c803fe4ff4b858de24f5c91ec57f_screen.jpg')}}" alt="poster">
+                    <div class="info" id="js-info">
+                        <div class="info-wrap">
+                            <div class="title"><a class="inline-link title-link js-grab" id="js-title" href="{{url_for(('blog.details'+'_'+viewtype), id = result.id)}}">{{result.title}}</a>
+                            </div>
+                            <div class="num-rate">
+                                <i style="color: #1e90ff; font-size: 0.7rem;" class="fas fa-star"></i>
+                                <span>{{(result.vote_average|float/1.7)|round}}</span>
+                            </div>
+                            <div class="date">
+                                {{result.release_date[:4]}}
+                            </div>
+                            <div class="genre">
+                                {% set list1 = result.genres.split(',') %} {% for each in range(list1|length) %} {% set gen = list1[each]|replace("'","")|replace("[","")|replace("]","")|replace(" ","") %}
+                                <a class="inline-link" href="{{url_for(('blog.genre'+'_'+viewtype), genre = gen)}}"><span>{{gen}}</span></a> {% endfor %}
+                            </div>
+                            <div class="rating js-rating">
+                                {% set rank = (result.vote_average|float/1.7)|round|int %} {% if rank > 5%} {% set rank = 5%} {% endif %} {% for i in range((rank)) %}
+                                <i class="fas fa-star star"></i> {% endfor %} {% for i in range((5 - rank))%}
+                                <i class="fas fa-star"></i> {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="query">
+            {% if prev_url %}
+            <a href="{{prev_url}}">Previous</a> {% endif %} {%if next_url %}
+            <a href="{{next_url}}">Next</a> {% endif %}
+        </div>
+        {% endif %} {% if music and viewtype == 'music'%}
+        <div class="result">
+            {% for result in music %}
+            <a href="{{url_for('blog.details'+'_'+viewtype,id = result.id)}}" class="cover-link">
+                <div class="results">
+                    <input type="checkbox" id="hover">
+                    <img src="{{url_for('static', filename ='./images/davido-fem-artwork-1.jpg')}}" alt="poster">
+                    <div class="info music-info">
+                        <div class="info-wrap music-info-wrap">
+                            <div style="display: none;" class="js-grab">
+                                {{result.song_id}}
+                            </div>
+                            <div class="title"><a class="inline-link title-link" href="{{url_for('blog.details'+'_' + viewtype,id = result.id)}}">{{result.title}}</a>
+                            </div>
+
+                            <div class="artist">
+                                {{result.artist_name}}
+                            </div>
+                            {% if result.year == 0%}
+                            <div class="date">
+                                null
+                            </div>
+                            {% else %}
+                            <div class="date">
+                                {%if result.year == 0%} null {%else%} {{result.year}}{%endif%}
+                            </div>
+                            {% endif %}
+                            <div class="genre">
+                                <a class="inline-link" href="{{url_for(('blog.genre'+'_'+viewtype), genre = result.genres)}}">
+                                    <span>{{result.genres}}</span></a>
+                            </div>
+                            <div class="rating js-rating">
+                                {% set rank = 5 - result.rating %} {%for n in range(result.rating)%}
+                                <i class="fas fa-star star"></i> {% endfor %} {% if rank%} {% for n in range(rank)%}
+                                <i class="fas fa-star"></i> {% endfor %} {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="query">
+            {% if prev_url %}
+            <a href="{{prev_url}}">Previous</a> {% endif %} {%if next_url %}
+            <a href="{{next_url}}">Next</a> {% endif %}
+        </div>
+        {% endif %}
+    </section>
+</main>
+{% endblock%} {% block script%}
+<script src="{{url_for('static', filename = './js/rate.js')}}"></script>
+<script src="{{url_for('static', filename = './js/adjust.js')}}"></script>
+{% endblock %}

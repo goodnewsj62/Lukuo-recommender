@@ -114,15 +114,37 @@ main {
 }
 
 .info {
-    width: 145px;
+    width: 170px;
     height: 200px;
-    display: inline-flex;
-    flex-flow: column nowrap;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     background-color: #fff;
-    bottom: -145px;
+    bottom: -148px;
     left: 0px;
-    padding: 7px;
+    padding-left: 6px;
+}
+
+.info-wrap {
+    margin-top: -10px;
+    height: 95%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+}
+
+.num-rate {
+    display: inline-flex;
+    align-items: center;
+}
+
+.num-rate span {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+.num-rate .fa-star {
+    transform: translateY(-1px);
 }
 
 #hover {
@@ -131,34 +153,48 @@ main {
 
 .info:hover,
 #hover:checked~.info {
-    bottom: -25px;
+    bottom: 0px;
 }
 
-.info .title {
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 0.9rem;
+.info:hover .num-rate,
+#hover:checked~.info-wrap .num-rate {
+    display: none;
 }
 
-.info .date {
-    margin-top: 5px;
+.info-wrap .title {
+    font-size: 0.8rem;
 }
 
-.info .genre {
-    margin-top: 5px;
+.music-info-wrap {
+    margin-top: 0;
+}
+
+.music-info {
+    bottom: -140px;
+}
+
+.info-wrap .genre {
+    width: 85%;
+    height: 30%;
+    display: flex;
+    flex-flow: column wrap;
 }
 
 .genre span {
-    margin-top: 2px;
+    margin-top: 4px;
     padding: 2px;
     background-color: #1e90ff;
     color: #fff;
     border-radius: 2px;
+    font-size: 0.8rem;
+}
+
+.toggle {
+    bottom: -137px;
 }
 
 .inline-rating {
-    margin-top: 5px;
-    height: 30px;
+    width: 85%;
     display: inline-flex;
     justify-content: space-evenly;
 }

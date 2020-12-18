@@ -1,74 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block title %}
-        <title>Lukuo recommender</title>{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block title %}
+    <title>Lukuo recommender</title>{% endblock %}
+
+    <link rel="shortcut icon" href="{{url_for('static',filename='/images/logo/favicon.ico')}}" type="image/x-icon">
+
+    <!-- link to fontawesome website -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Itim&family=Roboto:wght@700&display=swap" rel="stylesheet">
+
+    <!-- roboto google fonts  -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{url_for('static', filename = './fontawesome-free-5.14.0-web/css/all.css')}}">
+
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}"> {% block style%}{% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <input type="checkbox" id="check">
+        <input type="checkbox" id="user">
+        <header>
 
 
-
-        <!-- link to fontawesome website -->
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-            integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-            crossorigin="anonymous" />
-
-        <link
-            href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Itim&family=Roboto:wght@700&display=swap"
-            rel="stylesheet">
-
-        <!-- roboto google fonts  -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
-        <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
-
-        <link rel="stylesheet" href="{{url_for('static', filename = './fontawesome-free-5.14.0-web/css/all.css')}}">
-
-        <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}"> {% block style%}{% endblock %}
-        {%block script%}{% endblock %}
-    </head>
-
-    <body>
-        <div class="container">
-            <input type="checkbox" id="check">
-            <input type="checkbox" id="user">
-            <header>
-                <div class="head">
-                    <h2>Lukuo</h2>
-                </div>
-                <label for="check" class="check-label">
-                    <span>
-                        <i class="fa fa-bars"></i>
-                        <i class="fas fa-angle-down"></i>
-                        <i class="fas fa-angle-up"></i>
-                    </span>
-                </label>
-                <div class="auth">
-                    {% if not current_user.is_authenticated %}
-                    <span><a href="{{url_for('auth.login')}}">Login</a></span> {% endif %}
-                    {% if current_user.is_authenticated%}
-                    <label for="user" class="user-label">
+            <div class="head">
+                <img id='logo' src="{{url_for('static', filename= './images/logo/main-logo.webp')}}" alt="logo">
+                <h2>ukuo</h2>
+            </div>
+            <div class="auth">
+                {% if not current_user.is_authenticated %}
+                <span><a href="{{url_for('auth.login')}}">Login</a></span> {% endif %} {% if current_user.is_authenticated%}
+                <label for="user" class="user-label">
                         <span>
                             <i class="fas fa-user"></i>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </span>
                     </label>
-                    <nav class="user">
-                        <ul>
-                            <li>{{current_user.email}}</li>
-                            <a href="{{url_for('auth.update')}}">Settings</a>
-                            <a href="{{url_for('auth.logout')}}">LogOut</a>
-                        </ul>
-                    </nav>
-                    {% endif %}
-                </div>
-
-            </header>
-            <nav class="navbar">
-                <ul>
-                    <span class="span">
+                <nav class="user">
+                    <ul>
+                        <li>{{current_user.email}}</li>
+                        <a href="{{url_for('auth.update')}}">Settings</a>
+                        <a href="{{url_for('auth.logout')}}">LogOut</a>
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+            <label for="check" class="check-label">
+                    <span>
+                        <i class="fa fa-bars"></i>
+                        <i class="fas fa-angle-down"></i>
+                        <i class="fas fa-angle-up"></i>
+                    </span>
+                </label>
+        </header>
+        <nav class="navbar">
+            <ul>
+                <span class="span">
                         <h3 class="q-links">
                             Links
                         </h3>
@@ -83,11 +79,6 @@
                             </a>
                         </li>
                         {% if current_user.is_authenticated %}
-                        <li style="display: none;">
-                            <a href="#">
-                                Rate More
-                            </a>
-                        </li>
                         <li>
                             <a href="{{url_for('blog.recommended_movie')}}">
                                 Movies recommended for you
@@ -105,108 +96,105 @@
                             </a>
                         </li>
                     </span> {% if current_user.is_authenticated %}
-                    <span class="span">
+                <span class="span">
                         <h3 class="activity">
                             Activity
                         </h3>
                         <li>
-                            <a href="#">
-                                Rating
+                            <a href="{{ url_for('blog.ratings')}}">
+                                Ratings
                             </a>
                         </li>
                     </span> {% endif %}
-                    <input type="checkbox" id="music">
-                    <input type="checkbox" id="movie">
-                    <input type="checkbox" id="show">
-                    <div class="genres">
-                        <h3>Genres</h3>
-                        <label for="movie" class="movie-label">
+                <input type="checkbox" id="music">
+                <input type="checkbox" id="movie">
+                <input type="checkbox" id="show">
+                <div class="genres">
+                    <h3>Genres</h3>
+                    <label for="movie" class="movie-label">
                             <span>Movie</span>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </label>
-                        <ul class="movie">
-                            <li><a href="{{url_for('blog.genre_movie',genre = 'action')}}">Action</a></li>
-                            <li><a href="{{url_for('blog.genre_movie',genre = 'animation')}}">Animation</a></li>
-                            <li><a href="{{url_for('blog.genre_movie',genre = 'comedy')}}">Comedy</a></li>
-                            <li><a href="{{url_for('blog.genres_movie')}}">More Genres</a></li>
-                        </ul>
-                        <label for="music" class="music-label">
+                    <ul class="movie">
+                        <li><a href="{{url_for('blog.genre_movie',genre = 'action')}}">Action</a></li>
+                        <li><a href="{{url_for('blog.genre_movie',genre = 'animation')}}">Animation</a></li>
+                        <li><a href="{{url_for('blog.genre_movie',genre = 'comedy')}}">Comedy</a></li>
+                        <li><a href="{{url_for('blog.genres_movie')}}">More Genres</a></li>
+                    </ul>
+                    <label for="music" class="music-label">
                             <span>Music</span>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </label>
-                        <ul class="music">
-                            <li><a href="{{url_for('blog.genre_music', genre = 'afro-pop')}}">Afro Pop</a></li>
-                            <li><a href="{{url_for('blog.genre_music', genre = 'afro')}}">Afro</a></li>
-                            <li><a href="{{url_for('blog.genre_music', genre = 'gospel')}}">Gospel</a></li>
-                            <li><a href="{{url_for('blog.genre_music', genre = 'reggae')}}">Reggae</a></li>
-                            <li><a href="{{url_for('blog.genres_music')}}">More Genres</a></li>
-                        </ul>
-                        <label for="show" class="show-label">
+                    <ul class="music">
+                        <li><a href="{{url_for('blog.genre_music', genre = 'afro-pop')}}">Afro Pop</a></li>
+                        <li><a href="{{url_for('blog.genre_music', genre = 'afro')}}">Afro</a></li>
+                        <li><a href="{{url_for('blog.genre_music', genre = 'gospel')}}">Gospel</a></li>
+                        <li><a href="{{url_for('blog.genre_music', genre = 'reggae')}}">Reggae</a></li>
+                        <li><a href="{{url_for('blog.genres_music')}}">More Genres</a></li>
+                    </ul>
+                    <label for="show" class="show-label">
                             <span>Tv Series</span>
                             <i class="fas fa-angle-down"></i>
                             <i class="fas fa-angle-up"></i>
                         </label>
-                        <ul class="show">
-                            <li><a href="{{url_for('blog.genre_tv', genre = 'comedy')}}">Comedy</a></li>
-                            <li><a href="{{url_for('blog.genre_tv', genre = 'romance')}}">Romance</a></li>
-                            <li><a href="{{url_for('blog.genre_tv', genre = 'drama')}}">Drama</a></li>
-                            <li><a href="{{url_for('blog.genres_tv')}}">More Genres</a></li>
-                    </div>
+                    <ul class="show">
+                        <li><a href="{{url_for('blog.genre_tv', genre = 'comedy')}}">Comedy</a></li>
+                        <li><a href="{{url_for('blog.genre_tv', genre = 'romance')}}">Romance</a></li>
+                        <li><a href="{{url_for('blog.genre_tv', genre = 'drama')}}">Drama</a></li>
+                        <li><a href="{{url_for('blog.genres_tv')}}">More Genres</a></li>
+                </div>
 
                 </ul>
 
-                </ul>
-            </nav>
+            </ul>
+        </nav>
 
 
-            {% with messages = get_flashed_messages() %} {% if messages%}
-            <div class="message">
-                {% for message in messages %}
-                <p>{{message}}</p>
-                {% endfor %}
-            </div>
-            {% endif %} {% endwith %}
+        {% with messages = get_flashed_messages() %} {% if messages%}
+        <div class="message">
+            {% for message in messages %}
+            <p>{{message}}</p>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
 
 
 
 
-            <div class="wrapper">
-                {% block content%} {% endblock %}
-            </div>
-            <footer>
-                <nav class="nav-one">
-                    <h3> Learn more</h3>
-                    <a href="#">
+        <div class="wrapper">
+            {% block content%} {% endblock %}
+        </div>
+        <footer>
+            <nav class="nav-one">
+                <h3> Learn more</h3>
+                <a href="{{url_for('site.about')}}">
                         About Lukuo
                     </a>
-                    <a href="#">
+                <a href="mailto:goodnewsj62@gmail.com">
                         Contact Us
                     </a>
-                    <a href="#">
+                <a href="{{url_for('site.policy')}}">
                         Privacy Policy
                     </a>
-                </nav>
-                {% if current_user.is_authenticated %}
-                <nav class="nav-two">
-                    <h3>Your Account</h3>
-                    <a href="#">Settings</a>
-                    <a href="#">Your Ratings</a>
-                </nav>
-                {% endif %}
+            </nav>
+            {% if current_user.is_authenticated %}
+            <nav class="nav-two">
+                <h3>Your Account</h3>
+                <a href="{{ url_for('auth.update')}}">Settings</a>
+                <a href="{{ url_for('blog.ratings')}}">Your Ratings</a>
+            </nav>
+            {% endif %}
 
-                <nav class="nav-three">
-                    <h3>Help Lukuo</h3>
-                    <a href="#">
-                        Add a title
-                    </a>
-                    <a href="#">
-                        Give feedback
-                    </a>
-                </nav>
-            </footer>
-        </div>
-    </body>
+
+            <div class="copy-right">
+                <p>&copy; 2020 Lukuo. All rights reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    {%block script%}{% endblock %}
+</body>
 
 </html>

@@ -4,16 +4,19 @@ import datetime
 
 
 association_table = db.Table('association',
+
                              db.Column('user_id', db.Integer,
-                                       db.ForeignKey('user.id')),
+                                       db.ForeignKey('user.id', ondelete="cascade"), primary_key=True),
                              db.Column('movie_id', db.Integer,
-                                       db.ForeignKey('movie.id'))
+                                       db.ForeignKey('movie.id', ondelete="cascade"), primary_key=True)
                              )
 music_association_table = db.Table('music_association',
+                                   #    db.Column('id', db.Integer,
+                                   #              primary_key=True),
                                    db.Column('users', db.Integer,
-                                             db.ForeignKey('user.id')),
+                                             db.ForeignKey('user.id', ondelete="cascade"), primary_key=True),
                                    db.Column('music_id', db.Integer,
-                                             db.ForeignKey('music.id'))
+                                             db.ForeignKey('music.id', ondelete="cascade"), primary_key=True)
                                    )
 
 
@@ -33,9 +36,9 @@ class User(db.Model, UserMixin):
     genre_g = db.Column(db.String(20), nullable=False, default='')
     genre_h = db.Column(db.String(20), nullable=False, default='')
     movie = db.relationship(
-        'Movie', secondary=association_table, backref="users")
+        'Movie', secondary=association_table, backref=db.backref("users"), lazy=True)
     music = db.relationship(
-        'Music', secondary=music_association_table, backref="user_ids")
+        'Music', secondary=music_association_table, backref=db.backref("user_ids"), lazy=True)
 
 
 class Movie(db.Model):
@@ -75,7 +78,7 @@ class Music(db.Model):
     country = db.Column(db.String(30), nullable=False, default="")
     languages = db.Column(db.String(30), nullable=False, default="")
     rating = db.Column(db.Integer, nullable=False, default=3)
-    vote_count = db.Column(db.Integer, nullable=False, default=1)
+    vote_count = db.Column(db.Integer, nullable=False, default=0)
 
 
 class UserInfo(db.Model):

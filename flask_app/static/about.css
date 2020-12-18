@@ -1,0 +1,62 @@
+main {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+section {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    min-height: 50vh;
+    width: 90%;
+    padding: 1.5rem 1rem;
+    background-color: #fff;
+    margin: 2rem 0rem;
+    align-self: center;
+}
+
+.about {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+.about a {
+    text-decoration: none;
+    color: #1e90ff;
+}
+
+.about a:hover,
+.about a:active {
+    color: #d35113;
+}
+
+.about p {
+    font-size: 1.2rem;
+    font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (min-width: 550px) {
+    .logo-image {
+        width: 50px;
+        height: 60px;
+    }
+    .logo-image>img {
+        width: inherit;
+        height: inherit;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    section {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    section {
+        width: 50%;
+    }
+}
