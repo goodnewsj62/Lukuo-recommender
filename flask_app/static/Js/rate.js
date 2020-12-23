@@ -42,7 +42,8 @@ for (let j = 0; j < secondElements.length; j++) {
 
             xhttp.onload = function() {
                 if (xhttp.status == 200) {
-                    console.log(element);
+                    let response = this.responseText;
+                    console.log(response);
                 }
             }
 

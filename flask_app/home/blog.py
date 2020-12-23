@@ -1,5 +1,6 @@
 import os
 from flask import Blueprint, request, redirect, render_template, g, abort, url_for, session
+from flask_cors import cross_origin
 from flask_login import current_user, login_required
 from functools import wraps
 from recommender import Recommender
@@ -671,6 +672,7 @@ def genres_tv():
 # ----------------------------overall-------------------------
 
 @blog.route('/rating', methods=['GET', 'POST'])
+@cross_origin()
 def rate_movie():
 
     if request.method == 'POST':
