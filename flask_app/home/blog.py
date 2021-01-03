@@ -1,16 +1,18 @@
 import os
-from flask import Blueprint, request, redirect, render_template, g, abort, url_for, session
+from flask import Blueprint, request, redirect, render_template, g, abort, url_for, session, flash
 from flask_cors import cross_origin
 from flask_login import current_user, login_required
 from functools import wraps
 from recommender import Recommender
 from top import recommend_top, top_engine, get_popular_music
-from .form import Search
+from .form import Search, Files
 import random
 from flask_app import db
 from flask_app.model import Movie, Music, User
 from config.configuration import Config
 from flask_sqlalchemy import Pagination
+from werkzeug.utils import secure_filename
+from flask_app.csv_to_db import csv_to_movie, csv_to_music, csv_to_user
 import difflib
 
 
@@ -800,3 +802,68 @@ def tv_ratings():
 
     return render_template('blog/ratings.html', movie=movie.items, prev_url=prev_url,
                            next_url=next_url, no=no_of_movies, viewtype="tv")
+
+
+# -----------------------------Admin ----------------------------------
+
+def super_user(func):
+    @wraps(func)
+    def wrapper(*arg, **kwargs):
+        if current_user.email != 'testuser@gmail.com':
+            abort(403)
+        else:
+            return func(*arg, **kwargs)
+    return wrapper
+
+
+Base_Dir = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
+
+
+def makedir(dir):
+    if not os.path.isdir(dir):
+        os.makedirs(dir)
+
+
+@blog.route('/admin', methods=['GET', 'POST'])
+@login_required
+@super_user
+def admin():
+    form = Files()
+    
+    mov = Movie.query.filter_by(title="Cavite").first()
+    mov = mov.tagline
+
+    if form.validate_on_submit():
+        if form.options.data == 'movie':
+            dir = os.path.join(Base_Dir, 'csvs', 'movie')
+
+            makedir(dir)
+
+            data = form.file.data
+            filename = secure_filename(data.filename)
+            data.save(os.path.join(dir, filename))
+            csv_to_movie()
+        elif form.options.data == "music":
+       
+            dir = os.path.join(Base_Dir, 'csvs', 'music')
+
+            makedir(dir)
+
+            data = form.file.data
+            filename = secure_filename(data.filename)
+            data.save(os.path.join(dir, filename))
+            csv_to_music()
+            # flash('music file uploaded')
+        elif form.options.data =="user":
+            dir = os.path.join(Base_Dir, 'csvs', 'user_info')
+
+            makedir(dir)
+
+            data = form.file.data
+            filename = secure_filename(data.filename)
+            data.save(os.path.join(dir, filename))
+            csv_to_user()
+            # flash('user file uploaded')
+
+    return render_template('blog/admin.html', movie_form=form, mov=mov)

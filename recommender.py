@@ -1,8 +1,10 @@
 import time
 import difflib
 import pandas as pd
+from flask_app.model import Movie
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity, linear_kernel
+from flask_app.db_dataframe import df_movie, df_music, df_user
 
 
 # df1 = pd.read_csv('./tmdb.csv')
@@ -80,10 +82,10 @@ class Recommender:
         df1 = None
         df2 = None
         if self.type == 'movie':
-            df1 = pd.read_csv('./csv/tmdb.csv')
+            df1 = df_movie
             df2 = df1['soup']
         elif self.type == 'music':
-            df1 = pd.read_csv('./millions_set/newsong_data.csv')
+            df1 = df_music
             df1 = df1.loc[self.slice1:self.slice2]
             df1 = df1.drop('url', axis=1).reset_index(drop=True)
             # features = ['genres', 'artist_name', 'title']

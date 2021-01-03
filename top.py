@@ -2,6 +2,7 @@ import time
 import pandas as pd
 from flask_app.model import Movie
 import time
+from flask_app.db_dataframe import df_movie, df_music, df_user
 
 
 def dataframe_tv(tv_data):
@@ -13,7 +14,7 @@ def dataframe_tv(tv_data):
 def top_engine(tv_data=None):
     metadata = []
     if not tv_data:
-        metadata = pd.read_csv('./csv/tmdb_5000_movies.csv', low_memory=False)
+        metadata = df_movie
     else:
         metadata = dataframe_tv(tv_data)
 
@@ -44,13 +45,13 @@ def recommend_top(top_engine):
 
 def get_popular_music():
 
-    songmetadata = pd.read_csv('./millions_set/newsong_data.csv')
+    songmetadata = df_music
 
     # othersongdata = pd.read_fwf('./millions_set/10000.txt')
-    othersongdata = pd.read_csv('./millions_set/10000.csv')
+    othersongdata = df_user
 
     # songmetadata = pd.DataFrame(songmetadata)
-    othersongdata.columns = ['user_id', 'song_id', 'listen_count']
+    othersongdata.columns = ['id', 'user_id', 'song_id', 'listen_count']
 
     song_df = pd.merge(othersongdata, songmetadata.drop_duplicates(
         ['song_id']), on="song_id", how="left")

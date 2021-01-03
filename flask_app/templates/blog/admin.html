@@ -1,0 +1,40 @@
+{% extends 'base.html'%} {% block title%}
+<title>Admin page</title>
+{%endblock%} {% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename= 'admin.css')}}"> {% endblock %} {%block content%}
+<style>
+    main {
+        margin-top: 10%;
+        padding: 20px 100px;
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+<main>
+    <section class="csv">
+        <h1>{{mov}}</h1>
+        <h3>Upload movie csv</h3>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{movie_form.hidden_tag()}}
+            <div class="auth-div">
+                {{movie_form.file.label(class = "field-label")}} {% if movie_form.file.errors%} {{movie_form.file(class = "field error")}}
+                <div class="errors">
+                    {% for error in movie_form.file.errors %}
+                    <span>{{error}}</span> {% endfor %} {%else%} {{movie_form.file(class = "field")}} {% endif %}
+                </div>
+                <div class="auth-div">
+                    {{movie_form.options.label(class = "field-label")}} {% if movie_form.options.errors%} {{movie_form.options(class = "field error")}}
+                    <div class="errors">
+                        {% for error in movie_form.options.errors %}
+                        <span>{{error}}</span> {% endfor %} {%else%} {{movie_form.options(class = "field")}} {% endif %}
+                    </div>
+                    <div class="submit">
+                        {{movie_form.submit(class="btn")}}
+                    </div>
+        </form>
+
+    </section>
+
+</main>
+{%endblock%}
